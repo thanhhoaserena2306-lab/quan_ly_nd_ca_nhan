@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Login</title>
+    <style> 
+        body {
+            height: 100vh;
+            box-sizing: border-box;
+            background-color: #eee;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* layout */
+        .khung {
+            display: flex;
+            justify-content: center;
+        }
+        .box-left {
+            padding: 30px;
+            width: 40%;
+            height: 50vh;
+            border-radius: 15px 0px 0px 15px;
+            background-color: #83b9e7;
+        }
+        .box-right {
+            padding: 30px;
+            border-radius: 0px 15px 15px 0px;
+            background-color: white;
+        }
+
+        /* khung đăng nhập, đăng ký */
+        .login-box,.create-box {
+            width: 350px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+
+        }
+        .create-box {
+            display: none;
+        }
+        .hidden {
+            display: none;
+        }
+
+        /* input */
+        .input-box{
+            width: 100%;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .input-box input {
+            width: 300px;
+            font-size: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px 15px 10px 40px;
+            background-color: #fff;
+            transition: 0.2s;
+
+        }
+        .input-box input:focus {
+            border: 1px solid black;
+            box-shadow: 0 0 6px rgba(92, 141, 255, 0.5);
+        }
+        .input-box img {
+            width: 20px;
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.7;   /*Độ trong suốt */
+        }
+
+        /* Nút đăng nhập đăng ký */
+        .button-login, .button-create {
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+        .button-login {
+            width: 100%;
+            margin-top: 8px;
+            color: white;
+            border: none;
+            background-color: #2b6cb1;
+
+        }
+        .button-login:hover {
+            background-color: #1e4e85;
+        }
+        .button-create {
+            width: auto;
+            color: #1f6fb3;
+            border: 1px solid #2b6cb1;
+            background-color: #fff;  
+        }
+        .button-create:hover {
+            background:#e7e7e7;
+        }        
+        p { 
+            color: #444;
+            font-size: 14px;
+        } 
+
+        /* chế độ tối */
+        .toi {
+            background-color: #222;
+            color: white;
+        }
+        .toi p  {
+            color: white;
+        }
+        .toi .box-right, .toi .login-box, .toi .create-box {
+            background: #333;
+            color: white;
+        }
+        .toi input {
+            background-color: #444;
+            border-color: #666;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class = "khung">
+        <!-- khối bên trái -->
+        <div class = "box-left">
+            <h1>Personal Content Hub</h1>
+            <p>Quản lý bài viết, tương tác và thống kê của bạn chỉ với một cú nhập.</p>
+            <button id="light" class="hidden" onclick="turnOn()">Chế độ sáng</button>
+            <button id="dark" onclick="turnOff()">Chế độ tối</button>
+        </div>
+
+        <!-- khối bên phải -->
+        <div class="box-right">
+
+            <!-- LOGIN -->
+            <div class="login-box">
+
+                <!-- Tên đăng nhập -->
+                <div class="input-box">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png">
+                    <input id="dn_tk" type = "text" placeholder="Tên đăng nhập">
+                </div>
+
+                <!-- Mật khẩu -->
+                <div class="input-box">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png">
+                    <input id="dn_mk" type = "password" placeholder="Mật khẩu">
+                </div>
+
+                <button class="button-login" onclick="login()">Đăng nhập</button>
+                <hr>
+                <p>Bạn chưa có tài khoản?</p>
+                <button class="button-create" onclick="dangky()">Đăng ký ngay</button>
+            </div>
+
+            <!-- SIGN UP -->
+            <div class="create-box">
+                <h2>ĐĂNG KÝ</h2>
+                
+                <div class="input-box">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png">
+                    <input id="dk_tk" type = "text" placeholder="Tên đăng nhập">
+                </div>
+
+                <div class="input-box">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png">
+                    <input id="dk_mk" type = "password" placeholder="Mật khẩu">
+                </div>
+
+                <button class="button-create" onclick="tao_tk()">Tạo tài khoản</button>
+                <p class="return" onclick="backToLogin()">Quay lại</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- js -->
+    <script>
+        //chế độ sáng tối
+        function turnOn() { 
+            document.body.classList.remove("toi"); 
+            document.getElementById("light").classList.add("hidden");
+            document.getElementById("dark").classList.remove("hidden");
+        }
+
+        function turnOff() { 
+            document.body.classList.add("toi"); 
+            document.getElementById("dark").classList.add("hidden");
+            document.getElementById("light").classList.remove("hidden");
+        }
+
+        //Khởi tạo tài khoản với quyền admin
+        if (!localStorage.getItem('ds_tk')) {
+            let ds_admin = [
+                {taikhoan: 'thhoa', matkhau: '1', quyen: 'admin'},
+                {taikhoan: 'dieuan', matkhau: '1', quyen: 'admin'}
+            ];
+
+        localStorage.setItem('ds_tk', JSON.stringify(ds_admin));
+        }
+                
+        //Chuyển sang sign up
+        function dangky() { 
+            document.querySelector('.login-box').classList.add('hidden'); 
+            document.querySelector('.create-box').style.display = 'block'; 
+        } 
+        
+        //Quay lại login
+        function backToLogin() { 
+            document.querySelector('.create-box').style.display = 'none'; 
+            document.querySelector('.login-box').classList.remove('hidden'); 
+        }
+
+        //Đăng Ký tài khoản (quyền User)
+        function tao_tk() {
+            let ds_tk = JSON.parse(localStorage.getItem('ds_tk')) || [];
+
+            let tk = document.getElementById('dk_tk').value;
+            let mk = document.getElementById('dk_mk').value;
+           
+            //kiểm tra nhập đầy đủ
+            if (!tk || !mk) {
+                alert("Vui lòng nhập đầy đủ!");
+                return;
+            }
+            
+            //kiểm tra trùng tài khoản
+            for (let i = 0; i < ds_tk.length; i++) {
+                if (ds_tk[i].taikhoan === tk) {
+                    alert("Tài khoản đã tồn tại!");
+                    return;
+                }
+            }
+
+            //tai khoan moi (quyền user)
+            ds_tk.push({
+                taikhoan: tk,
+                matkhau: mk,
+                quyen: "user",
+            })
+
+            localStorage.setItem('ds_tk', JSON.stringify(ds_tk));
+
+            alert("Tạo tài khoản thành công!");
+
+            // Xóa nội dung ô nhập sau khi đăng kí xong
+            document.getElementById('dk_tk').value = "";
+            document.getElementById('dk_mk').value = "";
+            backToLogin();
+        }
+
+        //Đăng nhập
+        function login() { 
+            let ds_tk = JSON.parse(localStorage.getItem('ds_tk')) || [];
+
+            let tk = document.getElementById('dn_tk').value;
+            let mk = document.getElementById('dn_mk').value;
+
+            if (ds_tk.length == 0) {
+                alert("Chưa có tài khoản nào!");
+                return;
+            }
+            else {
+                for (let i = 0; i < ds_tk.length; i++) {
+                    if (ds_tk[i].taikhoan == tk && ds_tk[i].matkhau == mk) {
+                        //lưu thông tin người dùng
+                        localStorage.setItem('user', JSON.stringify(ds_tk[i]));
+                        alert("Đăng nhập thành công!");
+                        
+                        // Xóa nội dung ô nhập sau khi đăng nhập xong
+                        document.getElementById('dn_tk').value = "";
+                        document.getElementById('dn_mk').value = "";
+
+                        //chuyển trang sau khi đăng nhập
+                        location.href = "quanly.html";
+
+                        return;
+                    }
+                }
+                alert("Sai tài khoản hoặc sai mật khẩu!");
+            }
+        }
+        
+    </script>
+
+</body>
+</html>
