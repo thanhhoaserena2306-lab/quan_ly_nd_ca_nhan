@@ -17,13 +17,14 @@
         
         /* layout */
         .khung {
+            width: 100%;
             display: flex;
             justify-content: center;
         }
         .box-left {
             padding: 30px;
-            width: 40%;
-            height: 50vh;
+            width: 25%;
+            height: 60vh;
             border-radius: 15px 0px 0px 15px;
             background-color: #83b9e7;
         }
@@ -36,47 +37,51 @@
         /* khung đăng nhập, đăng ký */
         .login-box,.create-box {
             width: 350px;
-            padding: 20px;
-            text-align: center;
+            padding: 25px;
             border-radius: 15px;
             background-color: white;
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
 
         }
-        .create-box {
+        .create-box, .hidden  {
             display: none;
         }
-        .hidden {
-            display: none;
-        }
+        
 
         /* input */
         .input-box{
             width: 100%;
-            margin-bottom: 25px;
+            padding: 5px 0px;
             position: relative;
         }
         .input-box input {
-            width: 300px;
+            width: 90%;
             font-size: 15px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            padding: 10px 15px 10px 40px;
+            padding: 10px 15px;
             background-color: #fff;
-            transition: 0.2s;
 
         }
         .input-box input:focus {
             border: 1px solid black;
             box-shadow: 0 0 6px rgba(92, 141, 255, 0.5);
         }
-        .input-box img {
-            width: 20px;
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0.7;   /*Độ trong suốt */
+
+        /* Nút chế độ sáng tối */
+        .button-chedo {
+            width: 110px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 20px;
+            background-color: #83b9e7;
+        } 
+        .cd-sang {
+            color: white;
+            border: 1px solid black;
+        }
+        .cd-toi {
+            border: 1px solid white;
         }
 
         /* Nút đăng nhập đăng ký */
@@ -84,7 +89,6 @@
             padding: 12px;
             font-size: 15px;
             border-radius: 20px;
-            transition: 0.2s;
         }
         .button-login {
             width: 100%;
@@ -105,11 +109,20 @@
         }
         .button-create:hover {
             background:#e7e7e7;
-        }        
+        }  
+        h2 {
+            color: #667eea;
+            text-align: center;
+        }      
         p { 
             color: #444;
             font-size: 14px;
         } 
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
 
         /* chế độ tối */
         .toi {
@@ -119,9 +132,11 @@
         .toi p  {
             color: white;
         }
+        .toi .box-left {
+            background-color: #2b6cb1;
+        }
         .toi .box-right, .toi .login-box, .toi .create-box {
             background: #333;
-            color: white;
         }
         .toi input {
             background-color: #444;
@@ -137,8 +152,8 @@
         <div class = "box-left">
             <h1>Personal Content Hub</h1>
             <p>Quản lý bài viết, tương tác và thống kê của bạn chỉ với một cú nhập.</p>
-            <button id="light" class="hidden" onclick="turnOn()">Chế độ sáng</button>
-            <button id="dark" onclick="turnOff()">Chế độ tối</button>
+            <button id="light" class="hidden button-chedo cd-sang" onclick="turnOn()">Chế độ sáng</button>
+            <button id="dark" class="button-chedo cd-toi" onclick="turnOff()">Chế độ tối</button>
         </div>
 
         <!-- khối bên phải -->
@@ -146,39 +161,44 @@
 
             <!-- LOGIN -->
             <div class="login-box">
+                <h2>Đăng Nhập</h2>
 
                 <!-- Tên đăng nhập -->
                 <div class="input-box">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png">
-                    <input id="dn_tk" type = "text" placeholder="Tên đăng nhập">
+                    <label>Tên đăng nhập</label>
+                    <input id="dn_tk" type = "text" required>
                 </div>
 
                 <!-- Mật khẩu -->
                 <div class="input-box">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png">
-                    <input id="dn_mk" type = "password" placeholder="Mật khẩu">
+                    <label>Mật khẩu</label>
+                    <input id="dn_mk" type = "password" required>
                 </div>
 
                 <button class="button-login" onclick="login()">Đăng nhập</button>
+                <br>
                 <hr>
-                <p>Bạn chưa có tài khoản?</p>
+                <p>Chưa có tài khoản?</p>
                 <button class="button-create" onclick="dangky()">Đăng ký ngay</button>
             </div>
 
             <!-- SIGN UP -->
             <div class="create-box">
-                <h2>ĐĂNG KÝ</h2>
+                <h2>Đăng Ký</h2>
                 
                 <div class="input-box">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png">
-                    <input id="dk_tk" type = "text" placeholder="Tên đăng nhập">
+                    <label>Tên đăng nhập</label>
+                    <input id="dk_tk" type = "text" required>
                 </div>
-
                 <div class="input-box">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png">
-                    <input id="dk_mk" type = "password" placeholder="Mật khẩu">
+                    <label>Mật khẩu</label>
+                    <input id="dk_mk1" type = "password" required>
                 </div>
-
+                <div class="input-box">
+                    <label>Nhập lại mật khẩu</label>
+                    <input id="dk_mk2" type = "password" required>
+                </div>
+                <br>
                 <button class="button-create" onclick="tao_tk()">Tạo tài khoản</button>
                 <p class="return" onclick="backToLogin()">Quay lại</p>
             </div>
@@ -227,11 +247,18 @@
             let ds_tk = JSON.parse(localStorage.getItem('ds_tk')) || [];
 
             let tk = document.getElementById('dk_tk').value;
-            let mk = document.getElementById('dk_mk').value;
+            let mk1 = document.getElementById('dk_mk1').value;
+            let mk2 = document.getElementById('dk_mk2').value;
            
             //kiểm tra nhập đầy đủ
-            if (!tk || !mk) {
+            if (!tk || !mk1 || !mk2) {
                 alert("Vui lòng nhập đầy đủ!");
+                return;
+            }
+
+            //kiểm tra mật khẩu nhập lại 
+            if (mk1 !== mk2) {
+                alert("Mật khẩu nhập lại không khớp!");
                 return;
             }
             
@@ -246,7 +273,7 @@
             //tai khoan moi (quyền user)
             ds_tk.push({
                 taikhoan: tk,
-                matkhau: mk,
+                matkhau: mk1,
                 quyen: "user",
             })
 
@@ -257,6 +284,7 @@
             // Xóa nội dung ô nhập sau khi đăng kí xong
             document.getElementById('dk_tk').value = "";
             document.getElementById('dk_mk').value = "";
+            document.getElementById('dk_mk2').value = "";
             backToLogin();
         }
 
@@ -266,6 +294,11 @@
 
             let tk = document.getElementById('dn_tk').value;
             let mk = document.getElementById('dn_mk').value;
+
+            if (!tk || !mk) {
+                alert("Vui lòng nhập đầy đủ!");
+                return;
+            }
 
             if (ds_tk.length == 0) {
                 alert("Chưa có tài khoản nào!");
