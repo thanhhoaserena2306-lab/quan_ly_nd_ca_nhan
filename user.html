@@ -62,10 +62,10 @@ textarea {
   <div  id="manage">
     <h2>Quản Lý nội dung</h2>
     <form id="addcontent">
-        <input type="text" id="title" placeholder="Tiêu đề" required>
-        <input type="text" id="topic" placeholder="Chủ đề"  required>
-        <textarea id="description" placeholder="Mô tả ngắn " required></textarea>
-        <select id="choice">
+        <input type="text" id="tieude" placeholder="Tiêu đề" required>
+        <input type="text" id="chude" placeholder="Chủ đề"  required>
+        <textarea id="mota" placeholder="Mô tả ngắn " required></textarea>
+        <select id="chon">
             <option >Công khai</option>
             <option>Riêng tư</option>
         </select>
@@ -74,60 +74,94 @@ textarea {
     </form>
     <h3>Bài đăng của bạn </h3>
     <h4>Bài đăng riêng tư</h4>
-    <div id="yourshelfprivatecontent"></div>
+    <div id="riengtuban"></div>
     <h4>Bài đăng công khai </h4>
-    <div id="yourshelfpubliccontent"></div>
+    <div id="congkhaiban"></div>
 
     <h3>Bài đăng của người khác </h3>
-    <div id="themselvescontent"></div>
+    <div id="nguoita"></div>
 
   </div>
 
   <script>
+      //để biết người đang đăng nhập là ai, cái contents kia chỉ là 1 mảng dữ liệu
+      //chứa danh sách bài đăng trong localStorage, ko quyết định là ai đang đăng nhập
     let currentUser=null;
-    
+      
+   // khi mà nhấn nút submit thì sẽ được liên kết vs hàm  
 document.getElementById("manage").addEventListener("submit",function(e){
+    
+    // tránh bị reset lại vì đang dùng form , vì form html có hành vi mặc định gửi dữ liệu \\
+    // là tải lại trangtrang
     e.preventDefault();
-    const title=document.getElementById("title").value;
-    const topic=document.getElementById("topic").value;
-    const description=document.geElementById("description").value;
-    const choice=documnet.getElement("choice").value;
+    
+    //gán giá trị của từng thành phần cho các biến 
+    // value để lấy giá trị người dùng nhập vào 
+    // trim để xóa khoaeng trắng đầu và cuối 
+    const tieude=document.getElementById("tieude").value.trim();
+    const topic=document.getElementById("chude").value.trim();
+    const mota=document.getElementById("mota").value.trim();
+    const chon=documnet.getElement("chon").value.trim();
+    
+    //lấy danh sách bài hiện đang có dưới dạng mảng số 
     const contents=JSON.parse(localStorage.getItem("contents"))||[];
+    
+    //thêm bài mới vào
     contents.push({
+        
+        // xác định tài khoản hiện tại đang đăng nhập
         username: currentUser.username,
-        title,
-        topic,
-        description,
-        choice,
-        create: new Date().toISOString()
+        tieude,
+        chude,
+        mota,
+        chon,
+        thoigian: new Date().toISOString()
         
         
 
     });
+
+    // lưu lại vào localStorage
     localStorage.setItem("contents",JSON.stringify(contents));
+
+    //nội dung mới chx tự xuất hiện, danh sách hiển thị vẫn là bản cũcũ
     loadContents();
 
 
 })
+      
+      // nhiem vụ :lấy danh sách tư localStorage 
+      // loc bai , hiển thị ra , gắn nút sửa xóa, thích
 function loadContents(){
+
+    // lấy danh sách bài hiện tại có 
     const contents = JSON.parse(localStorage.getItem("contents"))||[];
-    const yourshelfprivatecontent=contents.filter(c=>c.username===currentUser.username && c.choice==="riêng tư");
-    const yourshelfpubliccontent=contents.filter(c=>c.username===currentUser&&c.choice==="công khai")
-    const themshelvescontent=contents.filter(c=>c.username!==currentUser.username && c.choice==="công khai" );
+
+    // loc bài đăng để biết là của ai, riêng tư hay công khai, filter là để duyệt
+    // nội dung thõa mãn điều kiện 
+    const riengtuban=contents.filter(c=>c.username===currentUser.username && c.chon==="riêng tư");
+    const congkhaiban=contents.filter(c=>c.username===currentUser&&c.chon==="công khai")
+    const nguoita=contents.filter(c=>c.username!==currentUser.username && c.chon==="công khai" );
+
+    // xóa đi tất cả , tránh bị lặp, bị ghi đèđè
+    document.getElementById("riengtuban").innerHTML="";
+    document.getElementById("congkhaiban").innerHTML="";
+    document.getElementById("nguoita").innerHTML="";
     
-    document.getElementById("yourshelfprivatecontent").innerHTML="";
-    document.getElementById("yourshelfpubliccontent").innerHTML="";
-    document.getElementById("themshelvescontent").innerHTML="";
+    // duyệt lại toàntoàn bộ dữ liệu
+riengtuban.forEach(c=>{
     
-yourshelfprivatecontent.forEach(c=>{
-    yourshelfprivatecontent.innerHTML+=`
+    // đang  trống giờ thêm vô nè
+    riengtuban.innerHTML+=`
     <div class="content-item">
-        <strong>${c.title}</strong><br/>
-        Chủ đề: ${c.topic}<br/>
-        Mô tả ngắn: ${c.description}<br/>
-        Trạng thái: ${c.choice}<br/>
+        <strong>${c.tieude}</strong><br/>
+        Chủ đề: ${c.chude}<br/>
+        Mô tả ngắn: ${c.mota}<br/>
+        Trạng thái: ${c.chon}<br/>
         <em>Tác giả: ${c.username}<br/>
-        Ngày tạo: ${new Date(c.create).toLocalstring()}<br/>
+        
+        // tolocaleString là để biến cái thời gian về dạng thực , new date đang khó đọc  
+        Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
         <button id="edit " onclick="edit(${index})">Sửa</button><br/>
         <button id="delete"  onclick="delete(${index})">Xóa</button>
 
@@ -135,62 +169,76 @@ yourshelfprivatecontent.forEach(c=>{
         </div>`})
 
 
-yourshelfpubliccontent.forEach(c=>{
-    yourshelfpubliccontent.innerHTML+=`
+congkhaiban.forEach(c=>{
+    congkhaiban.innerHTML+=`
     <div class="content-item">
-        <strong>${c.title}</strong><br/>
-        Chủ đề: ${c.topic}<br/>
-        Mô tả ngắn: ${c.description}<br/>
-        Trạng thái: ${c.choice}<br/>
+        <strong>${c.tieude}</strong><br/>
+        Chủ đề: ${c.chude}<br/>
+        Mô tả ngắn: ${c.mota}<br/>
+        Trạng thái: ${c.chon}<br/>
         <em>Tác giả: ${c.username}<br/>
-        Ngày tạo: ${new Date(c.create).toLocalstring()}<br/>
+        Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
         <button id="edit " onclick="edit(${index})">Sửa</button><br/>
         <button id="delete"  onclick="delete(${index})">Xóa</button>
         </div>`;
 })
-themshelvescontent.forEach(c=>{
-    themshelvescontent.innerHTML+=`
+nguoita.forEach(c=>{
+    nguoita.innerHTML+=`
     <div class="content-item">
-        <strong>${c.title}</strong><br/>
-        Chủ đề: ${c.topic}<br/>
-        Mô tả ngắn: ${c.description}<br/>
-        Trạng thái: ${c.choice}<br/>
+        <strong>${c.tieude}</strong><br/>
+        Chủ đề: ${c.chude}<br/>
+        Mô tả ngắn: ${c.mota}<br/>
+        Trạng thái: ${c.chon}<br/>
         <em>Tác giả: ${c.username}<br/>
-        Ngày tạo: ${new Date(c.create).toLocalstring()}<br/>
-        <button id="like" onclick="like(${index},${c.title})">Thích</button><br/>
-        <input type="text" id="comment(${index},${c.title})" placeholder="Viết bình luận">
-        <button onclick="add(${index},${c.title})">Gửi </button>
+        Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
+        <button id="like" onclick="like(${index},${c.tieude})">Thích</button><br/>
+        <input type="text" id="comment(${index},${c.tieude})" placeholder="Viết bình luận">
+        <button onclick="add(${index},${c.tieude})">Gửi </button>
         </div>`;
 })};
 //chức năng nút sửa, index để biết thứ tự bài đăng , group là để biết công khai hay riêng tư 
 function edit(index){
+    
   //lấy dư liệu bài ra (contents=ng1, ng2, ng3,...) ra từ localStorage
   const contents=JSON.parse(localStorage.getItem("contents")) || [];
+    
   // lọc  những người có yếu tố phù hợp
   const tb=contents.filter(c=>c.username===currentUser.username);
-  // item chính là 1 người nào đó có 1 số đặc điểm 
+    
+  // gán 
   const item=tb[index];
+
+    // ko có thì thoát
   if(!item) return;
-  const newtitle=prompt("Nhập tiêu đề mới: ", item.title);
-  const newdes =prompt("Nhập mô tả mới: ",item.description);
-  if(!newtitle || !newdes)return;
-  const nomal=contents.find(c=>c.usernamr===item.username&&c.title===item.title && c.create===item.create);
+
+    // có thì nhập thông tin mới 
+  const tieudemoi=prompt("Nhập tiêu đề mới: ", item.tieude);
+  const motamoi =prompt("Nhập mô tả mới: ",item.mota);
+
+    // ko nhập thì thoát 
+  if(!tieudemoi || !motamoi)return;
+    //
+  const nomal=contents.find(c=>c.username===item.username&&c.tieude===item.tieude && c.thoigian===item.thoigian);
   if(nomal){
-    c.title=newtitle;
-    c.topic=newdes;
+    c.tieude=tieudemoi;
+    c.topic=motamoi;
     localStorage.setItem("contents", JSON.stringify(contents));
     loadContents();
   }};
 
-
+// chức năng của nút xóa 
        function delete(index){
-  const contents=JSON.parse(localStorage.getItem(contents))||[];
-  const tb=contents.filter(c=>c.username===currentUser);
+           
+           // lấy dữ liệu 
+  const contents=JSON.parse(localStorage.getItem("contents"))||[];
+           
+           // lọc xem ai đang đăng nhập
+  const tb=contents.filter(c=>c.username===currentUser.username);
   const item=tb[index];
   if(!item) return;
-  const confirm =confirm(`Bạn có chắc muốn xóa: ${item.title}`);
-  if(!confirm) return;
-  const newcontents=contents.filter(c=>!(c.username===item.username&&c.title===item.title && c.create===item.create));
+  const isconfirm =confirm(`Bạn có chắc muốn xóa: ${item.tieude}`);
+  if(!isconfirm) return;
+  const newcontents=contents.filter(c=>!(c.username===item.username&&c.tieude===item.tieude && c.thoigian===item.thoigian));
   localStorage.setItem("contents",JSON.stringify(newcontents));
   loadContents();
 }
