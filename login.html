@@ -238,6 +238,11 @@
         
         //Quay lại login
         function backToLogin() { 
+            // Xóa nội dung ô nhập đăng ký khi quay lại
+            document.getElementById('dk_tk').value = "";
+            document.getElementById('dk_mk1').value = "";
+            document.getElementById('dk_mk2').value = "";
+
             document.querySelector('.create-box').style.display = 'none'; 
             document.querySelector('.login-box').classList.remove('hidden'); 
         }
@@ -283,7 +288,7 @@
 
             // Xóa nội dung ô nhập sau khi đăng kí xong
             document.getElementById('dk_tk').value = "";
-            document.getElementById('dk_mk').value = "";
+            document.getElementById('dk_mk1').value = "";
             document.getElementById('dk_mk2').value = "";
             backToLogin();
         }
