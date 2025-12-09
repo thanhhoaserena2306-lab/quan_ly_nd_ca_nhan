@@ -66,8 +66,8 @@ textarea {
         <input type="text" id="chude" placeholder="Chủ đề"  required>
         <textarea id="mota" placeholder="Mô tả ngắn " required></textarea>
         <select id="chon">
-            <option >Công khai</option>
-            <option>Riêng tư</option>
+            <option value="congkhai" >Công khai</option>
+            <option value="riengtu">Riêng tư</option>
         </select>
         <button type="submit">Thêm nội dung</button>
 
@@ -101,47 +101,7 @@ document.getElementById("manage").addEventListener("submit",function(e){
     const tieude=document.getElementById("tieude").value.trim();
     const topic=document.getElementById("chude").value.trim();
     const mota=document.getElementById("mota").value.trim();
-    const chon=documnet.getElement("chon").value.trim();
-    
-    //lấy danh sách bài hiện đang có dưới dạng mảng số 
-    const contents=JSON.parse(localStorage.getItem("contents"))||[];
-    
-    //thêm bài mới vào
-    contents.push({
-        
-        // xác định tài khoản hiện tại đang đăng nhập
-        username: currentUser.username,
-        tieude,
-        chude,
-        mota,
-        chon,
-        thoigian: new Date().toISOString()
-        
-        
-
-    });
-
-    // lưu lại vào localStorage
-    localStorage.setItem("contents",JSON.stringify(contents));
-
-    //nội dung mới chx tự xuất hiện, danh sách hiển thị vẫn là bản cũcũ
-    loadContents();
-
-
-})
-      
-      // nhiem vụ :lấy danh sách tư localStorage 
-      // loc bai , hiển thị ra , gắn nút sửa xóa, thích
-function loadContents(){
-
-    // lấy danh sách bài hiện tại có 
-    const contents = JSON.parse(localStorage.getItem("contents"))||[];
-
-    // loc bài đăng để biết là của ai, riêng tư hay công khai, filter là để duyệt
-    // nội dung thõa mãn điều kiện 
-    const riengtuban=contents.filter(c=>c.username===currentUser.username && c.chon==="riêng tư");
-    const congkhaiban=contents.filter(c=>c.username===currentUser&&c.chon==="công khai")
-    const nguoita=contents.filter(c=>c.username!==currentUser.username && c.chon==="công khai" );
+    const chon=documnet.getElemecongkhai("chon");
 
     // xóa đi tất cả , tránh bị lặp, bị ghi đèđè
     document.getElementById("riengtuban").innerHTML="";
@@ -242,6 +202,13 @@ function edit(index){
   localStorage.setItem("contents",JSON.stringify(newcontents));
   loadContents();
 }
+      //lưu chon để dùng cho trang thống kê
+      //1 . lấy ra từ html nè
+      const chon =document.getElementById("chon");
+      //2.gắn sự kiện change để mỗi khai thay đổi giá trị thẻ select id chon sẽ lưu vào local nè
+      chon.addEventListener("change",()=>{
+          localStorage.setItem("luuchon",chon.value);});
+      
   </script>
 </body>
 </html>
