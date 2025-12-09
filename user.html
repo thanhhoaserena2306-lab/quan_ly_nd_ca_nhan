@@ -124,18 +124,18 @@ document.getElementById("manage").addEventListener("submit",function(e){
 function loadContents() {
   const contents = JSON.parse(localStorage.getItem("contents")) || [];
   const riengtuban = contents.filter(c => c.username === currentUser.username && c.chon === "riengtu");
-  const congkhaiban = contents.filter(c => c.username === currentUser.username && c.visibility === "congkhai");
-  const nguoita = contents.filter(c => c.username !== currentUser.username && c.visibility === "congkhai");
+  const congkhaiban = contents.filter(c => c.username === currentUser.username && c.chon === "congkhai");
+  const nguoita = contents.filter(c => c.username !== currentUser.username && c.chon === "congkhai");
 
     
 
-    // xóa đi tất cả , tránh bị lặp, bị ghi đèđè
+    // xóa đi tất cả , tránh bị lặp, bị ghi đè
     document.getElementById("riengtuban").innerHTML="";
     document.getElementById("congkhaiban").innerHTML="";
     document.getElementById("nguoita").innerHTML="";
     
     // duyệt lại toàntoàn bộ dữ liệu
-riengtuban.forEach(c=>{
+riengtuban.forEach((c,index)=>{
     
     // đang  trống giờ thêm vô nè
     riengtuban.innerHTML+=`
@@ -155,7 +155,7 @@ riengtuban.forEach(c=>{
         </div>`})
 
 
-congkhaiban.forEach(c=>{
+congkhaiban.forEach((c,index)=>{
     congkhaiban.innerHTML+=`
     <div class="content-item">
         <strong>${c.tieude}</strong><br/>
