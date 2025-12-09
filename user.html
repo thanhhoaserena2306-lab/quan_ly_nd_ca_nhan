@@ -103,6 +103,32 @@ document.getElementById("manage").addEventListener("submit",function(e){
     const mota=document.getElementById("mota").value.trim();
     const chon=documnet.getElemecongkhai("chon");
 
+    // lại lấy chuỗi ra chuyển thành mảng rồi dùng 
+     const contents = JSON.parse(localStorage.getItem("contents")) || [];
+    // thêm các thành phần vào vô 
+  contents.push({
+      
+      // này là xác định bài đăng của tài khoản nào nè
+    username: currentUser.username,
+    tieude,
+    chude,
+    mota,
+    chon,
+    thoigian: new Date().toISOString()
+  });
+    
+  loadContents();
+});
+
+
+function loadContents() {
+  const contents = JSON.parse(localStorage.getItem("contents")) || [];
+  const riengtuban = contents.filter(c => c.username === currentUser.username && c.chon === "riengtu");
+  const congkhaiban = contents.filter(c => c.username === currentUser.username && c.visibility === "congkhai");
+  const nguoita = contents.filter(c => c.username !== currentUser.username && c.visibility === "congkhai");
+
+    
+
     // xóa đi tất cả , tránh bị lặp, bị ghi đèđè
     document.getElementById("riengtuban").innerHTML="";
     document.getElementById("congkhaiban").innerHTML="";
@@ -199,6 +225,8 @@ function edit(index){
   const isconfirm =confirm(`Bạn có chắc muốn xóa: ${item.tieude}`);
   if(!isconfirm) return;
   const newcontents=contents.filter(c=>!(c.username===item.username&&c.tieude===item.tieude && c.thoigian===item.thoigian));
+           
+           // lọc xong thì lưu lại nè
   localStorage.setItem("contents",JSON.stringify(newcontents));
   loadContents();
 }
