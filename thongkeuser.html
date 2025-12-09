@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang thống kê User</title>
+</head><style>
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        padding:30px;
+         background:rgb(236, 202, 231);
+    }
+    h1{
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+    .container{
+        margin-top: 30px;
+        display:flex;
+        gap:20px;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+    .card{
+        width:220px;
+        background-color: rgb(228, 123, 219);
+        padding:20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px gray;
+
+    }
+    .value{
+
+        font-size: 30px;
+        font-weight: bold;
+        margin-top:5px ;
+
+    }
+</style>
+<body>
+    <h1>Thống kê hệ thống</h1>
+    <p id="hello"></p>
+    <div class="container">
+            <div class="card">
+                      <div> Tổng bài đăng của mình </div>
+                     <div class="value" id="tongbaimk">0</div>
+            </div>
+               <div class="card">
+                      <div> Bài public </div>
+                     <div class="value" id="baickmk">0</div>
+            </div>
+               <div class="card">
+                      <div> Bài private </div>
+                     <div class="value" id="bairtmk">0</div>
+            </div>
+               <div class="card">
+                      <div> Lượt like nhận  </div>
+                     <div class="value" id="thichmk">0</div>
+            </div>
+             <div class="card">
+                      <div> Tổng bài đăng của mình </div>
+                     <div class="value" id="blmk">0</div>
+            </div>
+            <script>
+
+             // lấy dữ liệu từ localStorage ra , nếu ko có thì tạo 1 mảng rỗng 
+                let currentUser=JSON.parse(localStorage.getItem("currentUser"));
+                let users=JSON.parse(localStorage.getItem("users")) ||[];
+                let contents=JSON.parse(localStorage("contents")) ||[];
+                let comment=JSON.parse(localStorage.getItem("comment")) ||[];
+
+             // thêm nội dung để hiển thị 
+             document.getElementById("hello").innerText="Xin chào," + currentUser.username;
+ 
+             let baitoi=contents.filter(c=>c.username===currentUser.username );
+
+             document.getElementById("tongbaimk").innerText=baitoi.length;
+             documnent.getElementById("baickmk").innerText=contents.filter(c=>c.username===currentUser && c.chon==="congkhai").length;
+              documnent.getElementById("bairtmk").innerText=contents.filter(c=>c.username===currentUser && c.chon==="riengtu").length;
+
+              // tính lượt like 
+              document.getElementById("thichmk").innerText=baitoi.reduce((sum,x)=> sum + (x.thich || 0),0);
+             document.getElementById("blmk").innerText=comment.filter(c=>c.username===currentUser.username);
+            
+
+             
+
+
+
+
+
+            </script>
+
+
+
+
+    </div>
+    
+</body>
+</html>
