@@ -107,19 +107,23 @@ document.getElementById("manage").addEventListener("submit",function(e){
      const contents = JSON.parse(localStorage.getItem("contents")) || [];
     // thêm các thành phần vào vô 
   contents.push({
-      
+      // id để xác định em bài đăng thứ mấy của ai, hiện thời gian , chuyển thành chuỗi
+      id: Date.now().toString(),
       // này là xác định bài đăng của tài khoản nào nè
     username: currentUser.username,
     tieude,
     chude,
     mota,
     chon,
-    thoigian: new Date().toISOString()
+    thoigian: new Date().toISOString(),
+      thich: [],
+  binhluan:[]
   });
-    
+    localStorage.setItem("contents",JSON.stringify(contents));
   loadContents();
 });
 
+  binhluan:[]
 
 function loadContents() {
   const contents = JSON.parse(localStorage.getItem("contents")) || [];
@@ -169,6 +173,11 @@ congkhaiban.forEach((c,index)=>{
         </div>`;
 })
 nguoita.forEach(c=>{
+    // đếm xem có bao nhiêu đã like
+    const demlike=(c.thich || []).length;
+
+    // kiểm tra xem mk đã like bài này hay chx 
+    const colike=(c.thich || []).includes(currentUser.username);
     nguoita.innerHTML+=`
     <div class="content-item">
         <strong>${c.tieude}</strong><br/>
@@ -177,7 +186,10 @@ nguoita.forEach(c=>{
         Trạng thái: ${c.chon}<br/>
         <em>Tác giả: ${c.username}<br/>
         Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
-        <button id="like" onclick="like(${index},${c.tieude})">Thích</button><br/>
+
+        <div style="margin-top:10px;">
+        
+        <button id="like" onclick="hamdemlike('${c.id}')">${colike ? 'Đã thích' : 'Thích'} (${demlike})</button><br/>
         <input type="text" id="comment(${index},${c.tieude})" placeholder="Viết bình luận">
         <button onclick="add(${index},${c.tieude})">Gửi </button>
         </div>`;
