@@ -1,0 +1,255 @@
+body {
+    padding: 20px;
+    height: 100vh;
+    color: #333;
+    box-sizing: border-box;
+    background-color: #f4f7f9;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    /* layout */
+.khung {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2); 
+    border-radius: 15px;
+}
+.box-left {
+    padding: 30px;
+    width: 45%; 
+    min-width: 250px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    border-radius: 15px 0px 0px 15px;
+    background-color: #83b9e7;
+    color: white;
+}
+.box-right {
+    padding: 20px 5px;
+    width: 60%;
+    border-radius: 0px 15px 15px 0px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* khung đăng nhập, đăng ký */
+.dn-box, .dk-box {
+    width: 350px;
+    background-color: white;
+}
+.hidden { 
+    display: none; 
+}
+
+/* input */
+.input-box{
+    width: 100%;
+    padding: 5px 0px;
+    position: relative;
+}
+.input-box input {
+    width: 90%;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    background-color: #fff;
+}
+.input-box input:focus {
+    outline: none; 
+    border: 1px solid #667eea; 
+    box-shadow: 0 0 6px rgba(102, 126, 234, 0.5);
+}
+
+/* Nút đăng nhập đăng ký */
+.button-dn, .button-dk {
+    padding: 12px;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+}
+.button-dn {
+    width: 100%;
+    margin-top: 15px; 
+    color: white;
+    border: none;
+    border-radius: 10px;
+    background-color: #2b6cb1;
+}
+.button-dn:hover {
+    background-color: #1e4e85;
+}
+
+.button-dk { 
+    width: 30%; 
+    color: white; 
+    border: none;
+    background-color: green;  
+    display: block;
+    margin: 10px auto 0px auto;
+    text-decoration: none;
+}
+.button-dk:hover {
+    background:#17af17;
+} 
+
+/* Nút chế độ sáng tối */
+.button-chedo {
+    width: 110px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 20px;
+    background-color: #83b9e7;
+    cursor: pointer; 
+    border: 1px solid transparent; 
+} 
+.cd-sang {
+    color: white;
+    border-color: black;
+}
+.cd-toi {
+    color: black; 
+    border-color: white;
+}
+
+/* ===== */
+h2 {
+    color: #667eea;
+    text-align: center;
+}       
+p { 
+    color: #444;
+    font-size: 14px;
+} 
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.return {
+    text-align: center;
+    margin-top: 15px;
+    color: #2b6cb1;
+    text-decoration: underline;
+    cursor: pointer;
+    display: block;
+}
+
+/* === HỘP THÔNG BÁO === */
+.tbao_loi {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    background-color: #f8d7da; 
+    color: #721c24; 
+    font-size: 14px;
+    text-align: center;
+}
+
+.tbao_tcong {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    background-color: #d4edda; 
+    color: #155724;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* chế độ tối */
+.toi {
+    background-color: #1a1a1a; 
+    color: white;
+}
+.toi p { 
+    color: #ccc;
+}
+.toi .box-left {
+    background-color: #1e4e85;
+}
+.toi h1 {
+    color: white;
+}
+.toi h2 {
+    color: #83b9e7;
+}
+.toi .box-right, .toi .dn-box, .toi .dk-box {
+    background: #2b2b2b;
+}
+.toi input {
+    background-color: #3d3d3d;
+    border-color: #555;
+    color: white;
+}
+.toi .button-dk {
+    background-color: #ffffff;
+    color: #107bd9;
+    border-color: #83b9e7;
+}
+.toi .button-dk:hover {
+    background-color: #dedede;
+}
+.toi .return {
+    color: #83b9e7;
+}
+/* Chế độ tối cho hộp lỗi/thành công */
+.toi .tbao_loi {
+    background-color: #58151c; 
+    border-color: #842029;
+    color: #f5c6cb; 
+}
+.toi .tbao_tcong{ 
+    background-color: #0c3d19; 
+    border-color: #155724;
+    color: #c3e6cb; 
+}
+
+/* Responsive Design*/
+@media (max-width: 768px) {
+    .khung {
+        flex-direction: column;
+        box-shadow: none;
+        width: 95%;
+        margin: 0 auto; 
+        max-width: 450px; 
+    }
+    .box-left {
+        width: 100%;
+        height: auto; 
+        border-radius: 15px 15px 0px 0px; 
+        text-align: center; 
+        padding: 25px 30px; 
+    }
+    .box-right {
+        width: 100%;
+        padding: 30px;
+        border-radius: 0px 0px 15px 15px;
+    }
+    .dn-box, .dk-box {
+        width: 100%; 
+        max-width: none;
+        padding: 15px 0;
+    }
+    .input-box input {
+        width: 100%; 
+        box-sizing: border-box; 
+    }
+    .dn-box p {
+        text-align: center;
+    }
+    .box-left > div:last-child {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+}

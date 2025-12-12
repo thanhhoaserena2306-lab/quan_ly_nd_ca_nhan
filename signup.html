@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Đăng Ký</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
+</head>
+<body>
+    <div class="khung">
+        <div class = "box-left">
+            <div>
+                <h1>Personal Content Hub</h1>
+                <p>Nơi bắt đầu hành trình của bạn. Đăng ký để bắt đầu quản lý nội dung.</p>
+            </div>
+            <div>
+                <button id="light" class="hidden button-chedo cd-sang" onclick="turnOn()">Chế độ sáng</button>
+                <button id="dark" class="button-chedo cd-toi" onclick="turnOff()">Chế độ tối</button>
+            </div>
+        </div>
+        <div class="box-right">
+            <div class="dk-box"> 
+                <form id="form-dk">
+                    <h2>Đăng Ký</h2>
+                    <div id="dk_tcong" class="tbao_tcong hidden">Đăng ký thành công!</div>
+                    <div id="loi_dk" class="tbao_loi hidden"></div> 
+                    
+                    <div class="input-box">
+                        <label>Tên đăng nhập</label>
+                        <input id="dk_tk" type = "text" required>
+                    </div>
+                    <div class="input-box">
+                        <label>Mật khẩu</label>
+                        <input id="dk_mk1" type = "password" required>
+                    </div>
+                    <div class="input-box">
+                        <label>Nhập lại mật khẩu</label>
+                        <input id="dk_mk2" type = "password" required>
+                    </div>
+                    <button type="submit" class="button-dn">Tạo tài khoản</button>
+                </form>
+                <a class="return" href="login.html">Quay lại Đăng nhập</a>
+            </div>
+        </div>
+    </div>
+    <script>
+// --- 1. Hàm hiển thị lỗi / xóa lỗi ---
+    function showError(message) {
+        const box = document.getElementById("loi_dk");
+        box.textContent = message;
+        box.classList.remove("hidden");
+    }
+
+    function clearError() {
+        const box = document.getElementById("loi_dk");
+        box.textContent = "";
+        box.classList.add("hidden");
+    }
+
+    function showSuccess(message) {
+        const box = document.getElementById("dk_tcong");
+        box.textContent = message;
+        box.classList.remove("hidden");
+    }
+
+    function hideSuccess() {
+        const box = document.getElementById("dk_tcong");
+        box.classList.add("hidden");
+    }
+
+//---2. Đăng Ký tài khoản (quyền User)---
+    document.getElementById("form-dk").addEventListener("submit", function(e){
+    e.preventDefault();
+    clearError();
+    hideSuccess();
+        //lấy danh sách users
+        let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+        let tk = document.getElementById('dk_tk').value.trim();
+        let mk1 = document.getElementById('dk_mk1').value.trim();
+        let mk2 = document.getElementById('dk_mk2').value.trim();
+
+        // Kiểm tra mật khẩu
+        if (mk1 !== mk2) {
+            showError("Mật khẩu nhập lại không khớp!");
+            return;
+        }
+
+        //kiểm tra trùng tài khoản
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].taikhoan === tk) {
+                showError("Tài khoản đã tồn tại!");
+                return;
+            }
+        }
+
+        // Thêm user mới
+        users.push({
+            taikhoan: tk,
+            matkhau: mk1,
+            quyen: "user",
+            ngayGioTao: new Date().toLocaleString("vi-VN")
+        });
+
+        localStorage.setItem("users", JSON.stringify(users));
+
+        // Hiển thị thành công
+        showSuccess("Tạo tài khoản thành công!");
+
+        // Xóa nội dung ô nhập sau khi đăng kí xong
+        document.getElementById('dk_tk').value = "";
+        document.getElementById('dk_mk1').value = "";
+        document.getElementById('dk_mk2').value = "";
+
+        // Chuyển hướng về login sau 1s
+        setTimeout(() => {
+            location.href = "login.html";
+        }, 1200);
+    });
+// --- 3. Chế độ sáng / tối ---
+    function turnOn() {
+        document.body.classList.remove("toi");
+        document.getElementById("light").classList.add("hidden");
+        document.getElementById("dark").classList.remove("hidden");
+    }
+    function turnOff() {
+        document.body.classList.add("toi");
+        document.getElementById("dark").classList.add("hidden");
+        document.getElementById("light").classList.remove("hidden");
+    }
+    </script>
+</body>
+</html>

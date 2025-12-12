@@ -4,8 +4,573 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Admin</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 28px;
+    color: #34495e;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.action-link {
+    text-decoration: none;
+    color: #4a90e2;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+
+.welcome-message {  /*xin chào,admin!*/
+    font-size: 16px;
+    margin-top: -10px;
+    margin-bottom: 30px;
+}
+
+.welcome-message strong {
+    font-weight: bold;
+}
+
+.main-content {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.card h2 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #34495e;
+}
+
+/* Thêm tài khoản mới */
+.them-tk {
+    max-width: 400px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.create-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-items: center;
+    margin: 10px auto 0 auto;
+}
+
+.create-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Danh sách tài khoản - Cột bên phải */
+.ds-tk {
+    flex-grow: 1;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+    margin-left: 10px;
+}
+
+.search-box i {
+    position: relative;
+    right: 30px;
+    color: #95a5a6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-size: 14px;
+    color: #7f8c8d;
+    font-weight: normal;
+}
+
+.role-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.role-tag.Admin {
+    background-color: #e8f5e9;
+    color: #27ae60;
+}
+.role-tag.User {
+    background-color: #fcebe8;
+    color: #e74c3c;
+}
+
+/* Nhóm nút hành động */
+.action-cells {
+    white-space: nowrap; /* Ngăn các nút bị xuống dòng */
+}
+
+.action-btn {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 5px;
+    transition: background-color 0.2s;
+}
+
+/* Style cho nút Xóa */
+.delete-btn {
+    background-color: #f39c12; 
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #e67e22;
+}
+
+/* Chế độ tối */
+.chedo-toi {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+}
+
+.chedo-toi .card {
+    background-color: #34495e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.chedo-toi .title,
+.chedo-toi h2 {
+    color: #ecf0f1;
+}
+
+.chedo-toi .welcome-message {
+    color: #bdc3c7;
+}
+
+.chedo-toi table th {
+    background-color: #4a637a;
+    color: #bdc3c7;
+}
+
+.chedo-toi table th, 
+.chedo-toi table td {
+    border-bottom: 1px solid #4a637a;
+}
+
+.chedo-toi .form-group input,
+.chedo-toi .form-group select {
+    background-color: #2c3e50;
+    border: 1px solid #4a637a;
+    color: #ecf0f1;
+}
+
+.chedo-toi .reset-btn {
+    background-color: #2980b9;
+}
+
+.chedo-toi .reset-btn:hover {
+    background-color: #3498db;
+}
+
+.chedo-toi .delete-btn {
+    background-color: #e67e22;
+}
+
+.chedo-toi .delete-btn:hover {
+    background-color: #d35400;
+}
+
+/* điều chỉnh giao diện RESPONSIVE */
+
+/* Tablet (dưới 992px) */
+@media (max-width: 992px) {
+    .main-content { flex-direction: column; }
+    .them-tk, .ds-tk { max-width: 100%; }
+}
+
+/* Mobile nhỏ (dưới 480px) */
+@media (max-width: 480px) {
+
+    .header-actions {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .logout-btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .action-link {
+        font-size: 13px;
+    }
+
+    .search-box input {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    table th,
+    table td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .role-tag {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+}
+    </style>
 </head>
 <body>
-    
+    <div class="header">
+        <h1 class="title">Trang Quản Trị</h1>
+        <div class="header-actions">
+            <a href="#" class="action-link">Xem thống kê</a>
+            <a href="#" class="action-link" id="cd-toi">Chế độ tối</a>
+            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+        </div>
+    </div>
+    <p class="welcome-message">Xin chào, <strong>admin</strong>!</p>
+
+    <div class="main-content">
+        <div class="card them-tk">
+            <h2>Thêm tài khoản mới</h2>
+            <form id="addAccountForm">
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Vai trò</label>
+                    <select id="role">
+                        <option value="User">User</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="create-btn">Tạo tài khoản</button>
+            </form>
+        </div>
+
+        <div class="card ds-tk">
+            <h2>Danh sách tài khoản</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Tìm tài khoản...">
+                </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Vai trò</th>
+                        <th>Ngày tạo</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="accountTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+
+<script>
+    //khai báo biến
+document.addEventListener('DOMContentLoaded', () => {
+    const accountTableBody = document.getElementById('accountTableBody');
+    const welcomeMessage = document.querySelector('.welcome-message strong');
+    const logoutBtn = document.querySelector('.logout-btn');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const roleSelect = document.getElementById('role');
+    const searchInput = document.getElementById('searchInput');
+    const darkMode= document.getElementById("cd-toi");
+
+    // LẤY THÔNG TIN USER ĐANG ĐĂNG NHẬP
+    const taiKhoanDangNhap = JSON.parse(localStorage.getItem('user'));
+
+// ===== 1. KIỂM TRA QUYỀN ĐÚNG =====
+    function taiVaXacThuc() {
+        if (!taiKhoanDangNhap || taiKhoanDangNhap.quyen !== 'admin') {
+            alert('Bạn không có quyền truy cập trang quản trị!');
+            window.location.href = "login.html";  
+            return;
+        }
+
+        welcomeMessage.textContent = taiKhoanDangNhap.taikhoan;
+        hienThiBangTaiKhoan();
+    }
+
+// ==== 2. LẤY VÀ LƯU USERS =====
+    function layDanhSachTaiKhoan() {
+        return JSON.parse(localStorage.getItem('users')) || [];
+    }
+
+    function luuDanhSachTaiKhoan(list) {
+        localStorage.setItem('users', JSON.stringify(list));
+    }
+
+// ==== 3. HIỂN THỊ BẢNG ====
+    function hienThiBangTaiKhoan() {
+        let ds = layDanhSachTaiKhoan();
+        accountTableBody.innerHTML = "";
+
+        ds.forEach(user => {
+
+            // Tạo dòng mới
+            let laTaiKhoanDangNhap = false;
+            if (user.taikhoan === taiKhoanDangNhap.taikhoan) {
+                laTaiKhoanDangNhap = true;
+            }
+
+            // Xác định role hiển thị
+            let roleHienThi = "User";
+            if (user.quyen === "admin") {
+                roleHienThi = "Admin";
+            }
+
+            // Tạo dòng mới
+            const row = accountTableBody.insertRow();
+            row.setAttribute("data-username", user.taikhoan.toLowerCase());
+
+            // --- Cột Username ---
+            let cellUser = row.insertCell();
+            cellUser.textContent = user.taikhoan;
+
+            // --- Cột Vai trò ---
+            let cellRole = row.insertCell();
+            let roleSpan = document.createElement("span");
+            roleSpan.classList.add("role-tag");
+            roleSpan.classList.add(roleHienThi);
+            roleSpan.textContent = roleHienThi;
+            cellRole.appendChild(roleSpan);
+
+            // --- Cột Ngày ---
+            let cellNgay = row.insertCell();
+            cellNgay.textContent = user.ngayGioTao || "";
+
+            // --- Cột hành động ---
+            let cellAction = row.insertCell();
+            cellAction.classList.add("action-cells");
+
+            if (laTaiKhoanDangNhap) {
+                cellAction.textContent = "Đang đăng nhập";
+            } else {
+                let btn = document.createElement("button");
+                btn.className = "action-btn delete-btn";
+                btn.textContent = "Xóa";
+                cellAction.appendChild(btn);
+            }
+
+        });
+    }
+
+// ===== 4. THÊM USER ======
+    const form = document.getElementById("addAccountForm");
+
+    form.addEventListener("submit", function(e){
+        e.preventDefault(); // ngăn reload trang
+
+        const tk = usernameInput.value.trim();
+        const mk = passwordInput.value.trim();
+        const role = roleSelect.value.toLowerCase();
+
+        if (!tk || !mk) {
+            alert("Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+
+        let list = layDanhSachTaiKhoan();
+
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].taikhoan.toLowerCase() === tk.toLowerCase()) {
+                alert("Tài khoản đã tồn tại!");
+                return;
+            }
+        }
+
+        list.push({
+            taikhoan: tk,
+            matkhau: mk,
+            quyen: role,
+            ngayGioTao: new Date().toLocaleString("vi-VN")
+        });
+
+        luuDanhSachTaiKhoan(list);
+        hienThiBangTaiKhoan();
+
+        usernameInput.value = "";
+        passwordInput.value = "";
+        alert("Thêm tài khoản thành công!");
+    });
+
+
+// 5. XOÁ 
+    accountTableBody.addEventListener('click', e => {
+        const btn = e.target;
+        if (!btn.classList.contains("action-btn")) return;      // Chỉ xử lý nút có class action-btn
+
+        const row = btn.closest("tr");      // Lấy dòng chứa nút đó
+        const tk = row.cells[0].textContent;    // Lấy username từ dòng đó
+
+        let list = layDanhSachTaiKhoan();
+
+        if (btn.classList.contains("delete-btn")) {
+            if (tk === taiKhoanDangNhap.taikhoan) {
+                alert("Không thể xoá tài khoản đang đăng nhập!");
+                return;
+            }
+
+            if (confirm("Chắc chắn xoá?")) {
+                list = list.filter(u => u.taikhoan !== tk); 
+                luuDanhSachTaiKhoan(list);
+                hienThiBangTaiKhoan();
+            }
+        }
+
+    });
+
+// 6. ĐĂNG XUẤT
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem("user");
+        location.href = "login.html"; 
+    });
+
+// 7. TÌM KIẾM
+    // Lắng nghe sự kiện khi gõ trong ô tìm kiếm
+    searchInput.addEventListener("keyup", function(e) {
+        // Lấy từ khóa và chuyển về chữ thường để so sánh không phân biệt hoa thường
+        var keyword = searchInput.value.toLowerCase();
+
+        // Lấy tất cả các dòng trong bảng
+        var rows = accountTableBody.querySelectorAll("tr");
+
+        // Duyệt từng dòng
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            // Lấy tên tài khoản của dòng (được lưu trong data-username)
+            var name = row.getAttribute("data-username");
+
+            // Nếu tên chứa từ khóa thì hiện, ngược lại ẩn đi
+            if (name.indexOf(keyword) !== -1) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    });
+// 8. CHẾ ĐỘ SÁNG / TỐI
+    darkMode.addEventListener('click', function(e){
+        e.preventDefault(); // Ngăn link chuyển trang
+
+        // Kiểm tra xem body đã có chedo-toi chưa
+        if (document.body.classList.contains("chedo-toi")) {
+            // Nếu đang dark → chuyển sang sáng
+            document.body.classList.remove("chedo-toi");
+            darkMode.textContent = "Chế độ tối";
+        } else {
+            // Nếu đang sáng → chuyển sang dark
+            document.body.classList.add("chedo-toi");
+            darkMode.textContent = "Chế độ sáng";
+        }
+    });
+
+    taiVaXacThuc();
+});
+</script>
+
 </body>
 </html>

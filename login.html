@@ -3,334 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Login</title>
-    <style> 
-        body {
-            height: 100vh;
-            box-sizing: border-box;
-            background-color: #eee;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        /* layout */
-        .khung {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .box-left {
-            padding: 30px;
-            width: 25%;
-            height: 60vh;
-            border-radius: 15px 0px 0px 15px;
-            background-color: #83b9e7;
-        }
-        .box-right {
-            padding: 30px;
-            border-radius: 0px 15px 15px 0px;
-            background-color: white;
-        }
-
-        /* khung đăng nhập, đăng ký */
-        .login-box,.create-box {
-            width: 350px;
-            padding: 25px;
-            border-radius: 15px;
-            background-color: white;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
-
-        }
-        .create-box, .hidden  {
-            display: none;
-        }
-        
-
-        /* input */
-        .input-box{
-            width: 100%;
-            padding: 5px 0px;
-            position: relative;
-        }
-        .input-box input {
-            width: 90%;
-            font-size: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 10px 15px;
-            background-color: #fff;
-
-        }
-        .input-box input:focus {
-            border: 1px solid black;
-            box-shadow: 0 0 6px rgba(92, 141, 255, 0.5);
-        }
-
-        /* Nút chế độ sáng tối */
-        .button-chedo {
-            width: 110px;
-            padding: 10px;
-            font-size: 14px;
-            border-radius: 20px;
-            background-color: #83b9e7;
-        } 
-        .cd-sang {
-            color: white;
-            border: 1px solid black;
-        }
-        .cd-toi {
-            border: 1px solid white;
-        }
-
-        /* Nút đăng nhập đăng ký */
-        .button-login, .button-create {
-            padding: 12px;
-            font-size: 15px;
-            border-radius: 20px;
-        }
-        .button-login {
-            width: 100%;
-            margin-top: 8px;
-            color: white;
-            border: none;
-            background-color: #2b6cb1;
-
-        }
-        .button-login:hover {
-            background-color: #1e4e85;
-        }
-        .button-create {
-            width: auto;
-            color: #1f6fb3;
-            border: 1px solid #2b6cb1;
-            background-color: #fff;  
-        }
-        .button-create:hover {
-            background:#e7e7e7;
-        }  
-        h2 {
-            color: #667eea;
-            text-align: center;
-        }      
-        p { 
-            color: #444;
-            font-size: 14px;
-        } 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        /* chế độ tối */
-        .toi {
-            background-color: #222;
-            color: white;
-        }
-        .toi p  {
-            color: white;
-        }
-        .toi .box-left {
-            background-color: #2b6cb1;
-        }
-        .toi .box-right, .toi .login-box, .toi .create-box {
-            background: #333;
-        }
-        .toi input {
-            background-color: #444;
-            border-color: #666;
-            color: white;
-        }
-
-    </style>
+    <title>Trang Đăng Nhập</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
 </head>
 <body>
-    <div class = "khung">
-        <!-- khối bên trái -->
+    <div class="khung">
         <div class = "box-left">
-            <h1>Personal Content Hub</h1>
-            <p>Quản lý bài viết, tương tác và thống kê của bạn chỉ với một cú nhập.</p>
-            <button id="light" class="hidden button-chedo cd-sang" onclick="turnOn()">Chế độ sáng</button>
-            <button id="dark" class="button-chedo cd-toi" onclick="turnOff()">Chế độ tối</button>
+            <div>
+                <h1>Personal Content Hub</h1>
+                <p>Quản lý bài viết, tương tác và thống kê của bạn chỉ với một cú nhập.</p>
+            </div>
+            <div>
+                <button id="light" class="hidden button-chedo cd-sang" onclick="turnOn()">Chế độ sáng</button>
+                <button id="dark" class="button-chedo cd-toi" onclick="turnOff()">Chế độ tối</button>
+            </div>
         </div>
-
-        <!-- khối bên phải -->
         <div class="box-right">
+            <div class="dn-box">
+                <form id="form-dn">
+                    <h2>Đăng Nhập</h2>
+                    <div id="loi_dn" class="tbao_loi hidden"></div>
 
-            <!-- LOGIN -->
-            <div class="login-box">
-                <h2>Đăng Nhập</h2>
+                    <div class="input-box">
+                        <label>Tên đăng nhập</label>
+                        <input id="dn_tk" type = "text" required>
+                    </div>
 
-                <!-- Tên đăng nhập -->
-                <div class="input-box">
-                    <label>Tên đăng nhập</label>
-                    <input id="dn_tk" type = "text" required>
-                </div>
+                    <div class="input-box">
+                        <label>Mật khẩu</label>
+                        <input id="dn_mk" type = "password" required>
+                    </div>
 
-                <!-- Mật khẩu -->
-                <div class="input-box">
-                    <label>Mật khẩu</label>
-                    <input id="dn_mk" type = "password" required>
-                </div>
-
-                <button class="button-login" onclick="login()">Đăng nhập</button>
+                    <button type="submit" class="button-dn">Đăng nhập</button>
+                </form>
                 <br>
                 <hr>
                 <p>Chưa có tài khoản?</p>
-                <button class="button-create" onclick="dangky()">Đăng ký ngay</button>
-            </div>
-
-            <!-- SIGN UP -->
-            <div class="create-box">
-                <h2>Đăng Ký</h2>
-                
-                <div class="input-box">
-                    <label>Tên đăng nhập</label>
-                    <input id="dk_tk" type = "text" required>
-                </div>
-                <div class="input-box">
-                    <label>Mật khẩu</label>
-                    <input id="dk_mk1" type = "password" required>
-                </div>
-                <div class="input-box">
-                    <label>Nhập lại mật khẩu</label>
-                    <input id="dk_mk2" type = "password" required>
-                </div>
-                <br>
-                <button class="button-create" onclick="tao_tk()">Tạo tài khoản</button>
-                <p class="return" onclick="backToLogin()">Quay lại</p>
+                <a class="button-dk" href="signup.html">Đăng ký ngay</a>
             </div>
         </div>
     </div>
-
-    <!-- js -->
     <script>
-        //chế độ sáng tối
-        function turnOn() { 
-            document.body.classList.remove("toi"); 
-            document.getElementById("light").classList.add("hidden");
-            document.getElementById("dark").classList.remove("hidden");
-        }
+// --- 1. Khởi tạo tài khoản admin mặc định ---
+    // Lấy danh sách users từ localStorage
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
 
-        function turnOff() { 
-            document.body.classList.add("toi"); 
-            document.getElementById("dark").classList.add("hidden");
-            document.getElementById("light").classList.remove("hidden");
-        }
+    // Biến kiểm tra admin có tồn tại hay chưa
+    let tk_admin = false;
 
-        //Khởi tạo tài khoản với quyền admin
-        if (!localStorage.getItem('ds_tk')) {
-            let ds_admin = [
-                {taikhoan: 'thhoa', matkhau: '1', quyen: 'admin'},
-                {taikhoan: 'dieuan', matkhau: '1', quyen: 'admin'}
-            ];
-
-        localStorage.setItem('ds_tk', JSON.stringify(ds_admin));
+    // Duyệt mảng để xem admin đã có chưa
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].taikhoan === "admin") {
+            tk_admin = true;
+            break;
         }
-                
-        //Chuyển sang sign up
-        function dangky() { 
-            document.querySelector('.login-box').classList.add('hidden'); 
-            document.querySelector('.create-box').style.display = 'block'; 
-        } 
+    }
+    // Nếu chưa có admin → thêm admin vào danh sách
+    if (!tk_admin) {
+        users.push({
+            taikhoan: "admin",
+            matkhau: "Admin@123",
+            quyen: "admin",
+            ngayGioTao: new Date().toLocaleString("vi-VN")
+        });
+
+        // Lưu lại vào localStorage
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+
+// --- 2. Hàm Đăng nhập --
+    document.getElementById("form-dn").addEventListener("submit", function(e){
+        e.preventDefault();
+
+        let users = JSON.parse(localStorage.getItem("users") || "[]");
         
-        //Quay lại login
-        function backToLogin() { 
-            // Xóa nội dung ô nhập đăng ký khi quay lại
-            document.getElementById('dk_tk').value = "";
-            document.getElementById('dk_mk1').value = "";
-            document.getElementById('dk_mk2').value = "";
+        let tk = document.getElementById('dn_tk').value.trim();
+        let mk = document.getElementById('dn_mk').value.trim();
 
-            document.querySelector('.create-box').style.display = 'none'; 
-            document.querySelector('.login-box').classList.remove('hidden'); 
-        }
+        // Duyệt danh sách user
+        for (let i = 0; i < users.length; i++) {
 
-        //Đăng Ký tài khoản (quyền User)
-        function tao_tk() {
-            let ds_tk = JSON.parse(localStorage.getItem('ds_tk')) || [];
+            if (users[i].taikhoan === tk && users[i].matkhau === mk) {
+                localStorage.setItem("user", JSON.stringify(users[i]));
 
-            let tk = document.getElementById('dk_tk').value;
-            let mk1 = document.getElementById('dk_mk1').value;
-            let mk2 = document.getElementById('dk_mk2').value;
-           
-            //kiểm tra nhập đầy đủ
-            if (!tk || !mk1 || !mk2) {
-                alert("Vui lòng nhập đầy đủ!");
-                return;
-            }
+                // Reset input
+                document.getElementById("dn_tk").value = "";
+                document.getElementById("dn_mk").value = "";
 
-            //kiểm tra mật khẩu nhập lại 
-            if (mk1 !== mk2) {
-                alert("Mật khẩu nhập lại không khớp!");
-                return;
-            }
-            
-            //kiểm tra trùng tài khoản
-            for (let i = 0; i < ds_tk.length; i++) {
-                if (ds_tk[i].taikhoan === tk) {
-                    alert("Tài khoản đã tồn tại!");
-                    return;
+                // Điều hướng theo quyền
+                if (users[i].quyen === "admin") {
+                    location.href = "admin.html";
+                } else {
+                    location.href = "user.html";
                 }
-            }
-
-            //tài khoản mới (quyền user)
-            ds_tk.push({
-                taikhoan: tk,
-                matkhau: mk1,
-                quyen: "user",
-            })
-
-            localStorage.setItem('ds_tk', JSON.stringify(ds_tk));
-
-            alert("Tạo tài khoản thành công!");
-
-            // Xóa nội dung ô nhập sau khi đăng kí xong
-            document.getElementById('dk_tk').value = "";
-            document.getElementById('dk_mk1').value = "";
-            document.getElementById('dk_mk2').value = "";
-            backToLogin();
-        }
-
-        //Đăng nhập
-        function login() { 
-            let ds_tk = JSON.parse(localStorage.getItem('ds_tk')) || [];
-
-            let tk = document.getElementById('dn_tk').value;
-            let mk = document.getElementById('dn_mk').value;
-
-            if (!tk || !mk) {
-                alert("Vui lòng nhập đầy đủ!");
                 return;
             }
-
-            if (ds_tk.length == 0) {
-                alert("Chưa có tài khoản nào!");
-                return;
-            }
-            else {
-                for (let i = 0; i < ds_tk.length; i++) {
-                    if (ds_tk[i].taikhoan == tk && ds_tk[i].matkhau == mk) {
-                        //lưu thông tin người dùng
-                        localStorage.setItem('user', JSON.stringify(ds_tk[i]));
-                        alert("Đăng nhập thành công!");
-                        
-                        // Xóa nội dung ô nhập sau khi đăng nhập xong
-                        document.getElementById('dn_tk').value = "";
-                        document.getElementById('dn_mk').value = "";
-
-                        //chuyển trang sau khi đăng nhập
-                        location.href = "quanly.html";
-
-                        return;
-                    }
-                }
-                alert("Sai tài khoản hoặc sai mật khẩu!");
-            }
         }
-        
+
+        showError("Sai tài khoản hoặc mật khẩu!");
+    });
+
+// --- 3. Hàm hiển thị / xóa lỗi  ---
+    function showError(message) {
+        const box = document.getElementById("loi_dn");
+        box.textContent = message;
+        box.classList.remove("hidden");
+    }
+
+    function clearError() {
+        const box = document.getElementById("loi_dn");
+        box.textContent = "";
+        box.classList.add("hidden");
+    }
+
+// --- 4. Chế độ sáng / tối ---
+    function turnOn() {
+        document.body.classList.remove("toi");
+        document.getElementById("light").classList.add("hidden");
+        document.getElementById("dark").classList.remove("hidden");
+    }
+    function turnOff() {
+        document.body.classList.add("toi");
+        document.getElementById("dark").classList.add("hidden");
+        document.getElementById("light").classList.remove("hidden");
+    }
     </script>
-
 </body>
 </html>
