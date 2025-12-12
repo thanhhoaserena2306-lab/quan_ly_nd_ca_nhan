@@ -66,10 +66,10 @@
         </div>
     </div>
     <script>
-                let currentUser=JSON.parse(localStorage.getItem("currentUser"));
+                let currentUser=JSON.parse(localStorage.getItem("currentUser")) ||[];
                 let users=JSON.parse(localStorage.getItem("users")) ||[];
-                let contents=JSON.parse(localStorage("contents")) ||[];
-                let comment=JSON.parse(localStorage.getItem("comment")) ||[];
+                let contents=JSON.parse(localStorage.getItem("contents")) ||[];
+                
 
              // thêm nội dung để hiển thị 
              document.getElementById("hello").innerText="Xin chào," + currentUser.username;
@@ -83,7 +83,7 @@
             document.getElementById("tongcongkhai").innerText=tongcongkhai;
             document.getElementById("tonglike").innerText=contents.reduce((sum,x)=>sum+(x.thich  || 0 ),0);
 
-            document.getElementById("tongbl").innerText=comment.length;
+            document.getElementById("tongbl").innerText=contents.reduce((sum,x)=>sum+(x.binhluan || 0 ),0);
 
     </script>
     
