@@ -87,6 +87,14 @@
             <div class="value" id="tongbl">0</div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+    <script>
+                let currentUser=JSON.parse(localStorage.getItem("currentUser")) ||[];
+                let users=JSON.parse(localStorage.getItem("users")) ||[];
+                let contents=JSON.parse(localStorage.getItem("contents")) ||[];
+                
+>>>>>>> c8ba6e1693eb9c1d5249abfc749d4c0bf8e1b98d
 
 <script>
     let currentUser = JSON.parse(localStorage.getItem("user"));
@@ -99,6 +107,7 @@
         window.location.href = "login.html";
     }
 
+<<<<<<< HEAD
     // Hiển thị lời chào
     document.getElementById("hello").innerText = "Xin chào, " + currentUser.taikhoan;
 
@@ -141,6 +150,9 @@
     document.getElementById("tonglike").innerText = tonglike;
     document.getElementById("tongbl").innerText = tongbl;
 </script>
+=======
+            document.getElementById("tongbl").innerText=contents.reduce((sum,x)=>sum+(x.binhluan || 0 ),0);
+>>>>>>> c8ba6e1693eb9c1d5249abfc749d4c0bf8e1b98d
 
 </body>
 </html>
