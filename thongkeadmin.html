@@ -4,88 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang thống kê Admin</title>
-</head> <style>
 
-    body{
-        font-family: Arial, Helvetica, sans-serif;
-        background:rgb(236, 202, 231);
-        padding: 30px;
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background:rgb(236, 202, 231);
+            padding: 30px;
+        }
+        h1{
+            font-size: 30px;
+            margin-bottom:15px;
+        }
+        .container{
+            margin-top: 30px;
+            display:flex;
+            gap:20px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+        .card{
+            width: 220px;
+            background-color: rgb(228, 123, 219);
+            padding:20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px gray;
+        }
+        .value{
+            font-size:30px ;
+            font-weight: bold;
+            margin-top: 5px;
+        }
 
-    }
-    h1{
-        font-size: 30px;
-        margin-bottom:15px;
-    }
-    .container{
-        margin-top: 30px;
-        display:flex;
-        gap:20px;
-        flex-wrap: wrap;
-        text-align: center;
-
-    }
-    .card{
-        width: 220px;
-        background-color: rgb(228, 123, 219);
-        padding:20px;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px gray;
-
-    }
-    .value{
-        font-size:30px ;
-        font-weight: bold;
-        margin-top: 5px;
-
-    }
-</style>
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px; 
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 10px; 
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: 0.2s;
+            z-index: 999;
+        }
+        .back-btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
 
 <body>
-    <h1> Thống kê hệ thống Admin</h1>
+
+    <!-- Nút quay lại góc phải -->
+    <button class="back-btn" onclick="location.href='admin.html'">Quay lại</button>
+
+    <h1>Thống kê hệ thống Admin</h1>
     <p id="hello"></p>
+
     <div class="container">
         <div class="card">
-            <div >Tổng số tài khoản  </div>
+            <div>Tổng số tài khoản</div>
             <div class="value" id="tonguser">0</div>
         </div>
         <div class="card">
-            <div> Tổng bài đăng</div>
-            <div class="value"id="tongbai">0</div>
+            <div>Tổng bài đăng</div>
+            <div class="value" id="tongbai">0</div>
         </div>
         <div class="card">
-            <div> Tổng bài đăng công khai</div>
-            <div class="value"id="tongcongkhai">0</div>
+            <div>Tổng bài đăng công khai</div>
+            <div class="value" id="tongcongkhai">0</div>
         </div>
         <div class="card">
-            <div> Tổng lượt like</div>
-            <div class="value"id="tonglike">0</div>
+            <div>Tổng lượt like</div>
+            <div class="value" id="tonglike">0</div>
         </div>
         <div class="card">
-            <div> Tổng bình luận nhận  </div>
-            <div class="value"id="tongbl">0</div>
+            <div>Tổng bình luận</div>
+            <div class="value" id="tongbl">0</div>
         </div>
     </div>
-    <script>
-                let currentUser=JSON.parse(localStorage.getItem("currentUser"));
-                let users=JSON.parse(localStorage.getItem("users")) ||[];
-                let contents=JSON.parse(localStorage("contents")) ||[];
-                let comment=JSON.parse(localStorage.getItem("comment")) ||[];
 
-             // thêm nội dung để hiển thị 
-             document.getElementById("hello").innerText="Xin chào," + currentUser.username;
-            
+<script>
+    let currentUser = JSON.parse(localStorage.getItem("user"));
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let contents = JSON.parse(localStorage.getItem("contents")) || [];
 
-            // lọc công khai/riêng tư nè
-            let tongcongkhai=contents.filter(c=>c.chon==="congkhai").length;
-            
-            document.getElementById("tonguser").innerText=users.length;
-            document.getElementById("tongbai").innerText=contents.length;
-            document.getElementById("tongcongkhai").innerText=tongcongkhai;
-            document.getElementById("tonglike").innerText=contents.reduce((sum,x)=>sum+(x.thich  || 0 ),0);
+    // Nếu chưa đăng nhập hoặc không phải admin → không cho vào
+    if (!currentUser || currentUser.quyen !== "admin") {
+        alert("Bạn không có quyền truy cập!");
+        window.location.href = "login.html";
+    }
 
-            document.getElementById("tongbl").innerText=comment.length;
+    // Hiển thị lời chào
+    document.getElementById("hello").innerText = "Xin chào, " + currentUser.taikhoan;
 
-    </script>
-    
+
+    // ======= TÍNH TỔNG BÀI CÔNG KHAI =======
+    let tongcongkhai = 0;
+    for (let i = 0; i < contents.length; i++) {
+        if (contents[i].chon === "congkhai") {
+            tongcongkhai++;
+        }
+    }
+
+    // ======= TÍNH TỔNG LIKE =======
+    let tonglike = contents.reduce((sum, item) => {
+        let count = 0;
+
+        if (item.thich && Array.isArray(item.thich)) {
+            count = item.thich.length;
+        }
+
+        return sum + count;
+    }, 0);
+
+    // ======= TÍNH TỔNG BÌNH LUẬN =======
+    let tongbl = contents.reduce((sum, item) => {
+        let count = 0;
+
+        if (item.binhluan && Array.isArray(item.binhluan)) {
+            count = item.binhluan.length;
+        }
+
+        return sum + count;
+    }, 0);
+
+
+    // ======= GÁN LÊN GIAO DIỆN =======
+    document.getElementById("tonguser").innerText = users.filter(u => u.quyen === "user").length;
+    document.getElementById("tongbai").innerText = contents.length;
+    document.getElementById("tongcongkhai").innerText = tongcongkhai;
+    document.getElementById("tonglike").innerText = tonglike;
+    document.getElementById("tongbl").innerText = tongbl;
+</script>
+
 </body>
 </html>
