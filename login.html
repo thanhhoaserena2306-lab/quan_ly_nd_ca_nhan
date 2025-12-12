@@ -86,10 +86,6 @@
             if (users[i].taikhoan === tk && users[i].matkhau === mk) {
                 localStorage.setItem("user", JSON.stringify(users[i]));
 
-                // Reset input
-                document.getElementById("dn_tk").value = "";
-                document.getElementById("dn_mk").value = "";
-
                 // Điều hướng theo quyền
                 if (users[i].quyen === "admin") {
                     location.href = "admin.html";
@@ -108,12 +104,6 @@
         const box = document.getElementById("loi_dn");
         box.textContent = message;
         box.classList.remove("hidden");
-    }
-
-    function clearError() {
-        const box = document.getElementById("loi_dn");
-        box.textContent = "";
-        box.classList.add("hidden");
     }
 
 // --- 4. Chế độ sáng / tối ---
