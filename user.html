@@ -123,7 +123,8 @@ document.getElementById("manage").addEventListener("submit",function(e){
   loadContents();
 });
 
-  binhluan:[]
+//Sau khi push thì dữ liệu đã được lưu, nhưng ko đồng nghĩa với nó được hiển thị ra màn hình
+      // chức năng của hàm này là để lọc và hiển thị nội dung sau khi nhập ra màn hình
 
 function loadContents() {
   const contents = JSON.parse(localStorage.getItem("contents")) || [];
@@ -186,12 +187,26 @@ nguoita.forEach(c=>{
         Trạng thái: ${c.chon}<br/>
         <em>Tác giả: ${c.username}<br/>
         Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
-
+   
         <div style="margin-top:10px;">
         
         <button id="like" onclick="hamdemlike('${c.id}')">${colike ? 'Đã thích' : 'Thích'} (${demlike})</button><br/>
-        <input type="text" id="comment(${index},${c.tieude})" placeholder="Viết bình luận">
-        <button onclick="add(${index},${c.tieude})">Gửi </button>
+        </div>
+        <div class="comment-box" style="margin-top:10px;">
+        
+        //tạo 1 ô nhập và nút gửi, , bởi vì bài nào cx có 1 ô nhập nên phải xác định bằng c.id
+        // nút gửi cx vậy 
+        <input type="text" id="comment-input('${c.id}')" placeholder="Viết bình luận">
+        <button onclick="hamthemcomment('${c.id}')">Gửi </button>
+
+        // tạo theem 1 hộp để chứa các comment của bài bên trong 
+        <div id="comment-${c.id}" style="margin-top: 10px;">
+        ${(c.binhluan || []).map(cm =>`<div class="comment">
+        <strong>${cm.tacgia}:</strong> ${cm.text} <small style="color: violet;"> (${new Date(cm.thoigian).toLocaleString()})</small>.join(" ");
+        </div>
+        </div>
+        
+        
         </div>`;
 })};
 //chức năng nút sửa, index để biết thứ tự bài đăng , group là để biết công khai hay riêng tư 
@@ -242,6 +257,7 @@ function edit(index){
   localStorage.setItem("contents",JSON.stringify(newcontents));
   loadContents();
 }
+function 
       //lưu chon để dùng cho trang thống kê
       //1 . lấy ra từ html nè
       const chon =document.getElementById("chon");
