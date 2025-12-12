@@ -257,13 +257,53 @@ function edit(index){
   localStorage.setItem("contents",JSON.stringify(newcontents));
   loadContents();
 }
-function 
-      //lưu chon để dùng cho trang thống kê
-      //1 . lấy ra từ html nè
-      const chon =document.getElementById("chon");
-      //2.gắn sự kiện change để mỗi khai thay đổi giá trị thẻ select id chon sẽ lưu vào local nè
-      chon.addEventListener("change",()=>{
-          localStorage.setItem("luuchon",chon.value);});
+function hamdemlike(postid){
+// lấy dữ liệu từ contents ra 
+const contents=JSON.parse(localStorage.getItem("contents")) || [];
+
+// lọc để tìm vị trí mảng trong content đó( dạng: 1,2,3,...)
+const idx = contents.findIndex(P => p.id === postid);
+
+// -1 có nghĩa là ko tồn tại, ko tồn tại thì thoát
+if(idx===-1) return;
+
+// trên mk lọcra vị trí của bài đăng trong content rồi , bây giờ mk lấy nó ra để gán
+// bây giờ post là 1 bài đang xác định 
+const post=content[idx];
+
+post.thich=post.thich || [];
+// tìm xem người này đã có trong dahsasch like chx, kiểm tra em có đang like chx á
+const pos= post.thich.indexOf(currentUser.username);
+if(pos===-1){
+post.thich.push(currentUser.username);}
+else{
+post.thich.splice(pos,1)}
+localStorage.setItem("contents",JSON.stringify(contents));
+loadContents();}
+function hamthemcommnet(postid){
+const input= document.getElementById(`comment-input-${postid}`);
+if(!input) return;
+const text= input.value.trim();
+if (!text){
+alert("Khôg thể gửi bình luận rỗng); return;
+}
+const contents=JSON.parse(localStorage.getItem("contents");
+const idx=contents.findIndex(p=>p.id===postid);
+if (idx===-1) return;
+const post= contents[idx];
+if(!post.binhluan){
+post.binhluan=[];
+}
+post.binhluan.push{
+tacgia: currentUser.username,
+text: text,
+thoigian: new Date().tpISOString()
+});
+localStorage.setItem("contents", JSON.stringify(contents));
+input.value="";
+loadContents();
+
+     
       
   </script>
 </body>
