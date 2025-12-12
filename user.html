@@ -3,254 +3,446 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHức năng của user</title>
+    <title>Chức năng của User</title>
 </head>
 <style>
+/* --- STYLE ĐỒNG BỘ VỚI INDEX.HTML --- */
 body {
   font-family: Arial, sans-serif;
-  background-color:rgb(103, 190, 240);
-  color: #012549;
+  background-color: #eee;
+  color: #444;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  align-items: flex-start; /* Căn trên cùng */
+  min-height: 100vh;
+  padding: 30px 20px;
   box-sizing: border-box;
 }
 
-.container {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 51, 102, 0.2);
-  width: 300px;
+/* --- MAIN LAYOUT (2 CỘT) --- */
+.main-layout {
+  display: flex;
+  width: 90%;
+  max-width: 1500px;
+  gap: 30px;
 }
 
-h1, h2,h3 {
-  text-align: center;
-  color: #0055cc;
+/* --- CỘT TRÁI (SIDEBAR) --- */
+.sidebar {
+    width: 300px; /* Chiều rộng cố định cho Sidebar */
+    flex-shrink: 0; /* Ngăn sidebar bị co lại */
 }
 
-input, select, button {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #0055cc;
-  border-radius: 5px;
+/* Khối Thêm nội dung */
+#khuvucthembai { /* ID MỚI */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-button {
-  background-color: #0055cc;
-  color: white;
-  cursor: pointer;
+/* Nút Đăng xuất */
+#nutdangxuat { /* ID MỚI */
+    background-color: #d9534f; 
+    width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+#nutdangxuat:hover {
+    background-color: #c9302c;
 }
 
-button:hover {
-  background-color: #003366;
+/* Nút Thống kê (New Style) */
+.nut-thongke { /* CLASS MỚI */
+    background-color: #2b6cb1; /* Màu xanh đồng bộ với nút Thêm nội dung */
+    color: white;
+    width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.nut-thongke:hover {
+    background-color: #1e4e85;
+}
+
+/* --- CỘT PHẢI (MAIN CONTENT) --- */
+.main-content {
+    flex-grow: 1; /* Chiếm hết phần còn lại */
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+}
+
+h2, h3, h4 {
+    color: #2b6cb1;
+    text-align: left; /* Căn trái cho Main Content */
+    margin-top: 0;
+}
+h2 { text-align: center; } /* Giữ tiêu đề chính giữa */
+
+/* --- FORM & INPUTS --- */
+input, select, button, textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.add-button { /* Dành cho nút Thêm nội dung */
+    background-color: #2b6cb1;
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+.add-button:hover {
+  background-color: #1e4e85;
 }
 textarea {
-    width: 100%;
-    height:60px;
-    padding:10px;
-    border-radius: 10px;
-    border:1px solid rgb(82, 57, 184);
+    height: 80px;
+    resize: vertical;
+}
 
+input:focus, textarea:focus, select:focus {
+    border: 1px solid #2b6cb1; 
+    box-shadow: 0 0 6px rgba(43, 108, 177, 0.5); 
+    outline: none;
+}
+
+/* --- CONTENT LISTS (DÙNG FLEX HOẶC GRID CHO CÁC MỤC BÀI ĐĂNG) --- */
+.content-section {
+    margin-top: 20px;
+}
+.content-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.content-item {
+    flex: 1 1 calc(50% - 15px); /* 2 cột trên màn hình lớn */
+    max-width: calc(50% - 15px);
+    border: 1px solid #83b9e7; 
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f0f8ff; /* Nền xanh nhạt cho mỗi bài viết */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-item strong {
+    font-size: 1.1em;
+    color: #2b6cb1;
+    display: block;
+    margin-bottom: 5px;
+}
+.content-item em {
+    display: block;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.content-item .action-buttons button {
+    width: auto;
+    padding: 8px 15px;
+    margin: 5px 10px 5px 0;
+    background-color: #83b9e7;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.content-item .action-buttons button:hover {
+    background-color: #6a9ac9; 
+}
+
+/* Responsive  */
+@media (max-width: 900px) {
+    .main-layout {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .sidebar {
+        width: 100%;
+    }
+    .content-item {
+        flex: 1 1 100%;
+        max-width: 100%; /* Chỉ còn 1 cột trên màn hình nhỏ */
+    }
 }
 </style>
 <body>
-  
-  <div  id="manage">
-    <h2>Quản Lý nội dung</h2>
-    <form id="addcontent">
-        <input type="text" id="tieude" placeholder="Tiêu đề" required>
-        <input type="text" id="chude" placeholder="Chủ đề"  required>
-        <textarea id="mota" placeholder="Mô tả ngắn " required></textarea>
-        <select id="chon">
-            <option value="congkhai" >Công khai</option>
-            <option value="riengtu">Riêng tư</option>
-        </select>
-        <button type="submit">Thêm nội dung</button>
-
-    </form>
-    <h3>Bài đăng của bạn </h3>
-    <h4>Bài đăng riêng tư</h4>
-    <div id="riengtuban"></div>
-    <h4>Bài đăng công khai </h4>
-    <div id="congkhaiban"></div>
-
-    <h3>Bài đăng của người khác </h3>
-    <div id="nguoita"></div>
-
-  </div>
-
-  <script>
-      //để biết người đang đăng nhập là ai, cái contents kia chỉ là 1 mảng dữ liệu
-      //chứa danh sách bài đăng trong localStorage, ko quyết định là ai đang đăng nhập
-    let currentUser=null;
-      
-   // khi mà nhấn nút submit thì sẽ được liên kết vs hàm  
-document.getElementById("manage").addEventListener("submit",function(e){
     
-    // tránh bị reset lại vì đang dùng form , vì form html có hành vi mặc định gửi dữ liệu \\
-    // là tải lại trangtrang
+    <div class="main-layout">
+        <div class="sidebar">
+            <div id="khuvucthembai"> 
+                <h3>Thêm Bài Viết Mới</h3>
+                <form id="formthembai"> 
+                    <input type="text" id="tieude" placeholder="Tiêu đề" required> 
+                    <input type="text" id="chude" placeholder="Chủ đề" required> 
+                    <textarea id="mota" placeholder="Mô tả ngắn" required></textarea> 
+                    <select id="chedochon"> 
+                        <option value="congkhai">Công khai</option>
+                        <option value="riengtu">Riêng tư</option>
+                    </select>
+                    <button type="submit" class="add-button">Thêm nội dung</button>
+                </form>
+            </div>
+
+                        <a href="thongkeuser.html" style="text-decoration: none;">
+                <button id="nutthongke" class="nut-thongke">Thống kê</button> 
+            </a>
+            
+            <button id="nutdangxuat" onclick="dangxuat()">Đăng xuất</button> 
+        </div>
+
+        <div class="main-content">
+            <h2>Quản Lý Bài Đăng</h2>
+
+            <div class="content-section">
+                <h3>Bài Đăng Của Tôi</h3>
+                
+                <h4>Bài đăng Công khai</h4>
+                <div id="danhsachcongkhaicua_toi" class="content-list"></div> 
+                <h4 style="margin-top: 20px;">Bài đăng Riêng tư</h4>
+                <div id="danhsachriengtucua_toi" class="content-list"></div> 
+            </div>
+
+            <hr>
+
+            <div class="content-section">
+                <h3>Bài Đăng Công Khai Của Người Khác</h3>
+                <div id="danhsachcongkhaicua_nguoikhac" class="content-list"></div> 
+            </div>
+        </div>
+    </div>
+<script>
+// Lấy thông tin người dùng hiện tại từ localStorage (đúng chuẩn từ login/signup)
+let nguoidunghientai = JSON.parse(localStorage.getItem('user'));
+
+if (!nguoidunghientai) {
+    location.href = "login.html";
+}
+
+// ---------------- FORM THÊM BÀI ĐĂNG ----------------
+document.getElementById("formthembai").addEventListener("submit", function (e) {
     e.preventDefault();
-    
-    //gán giá trị của từng thành phần cho các biến 
-    // value để lấy giá trị người dùng nhập vào 
-    // trim để xóa khoaeng trắng đầu và cuối 
-    const tieude=document.getElementById("tieude").value.trim();
-    const topic=document.getElementById("chude").value.trim();
-    const mota=document.getElementById("mota").value.trim();
-    const chon=documnet.getElemecongkhai("chon");
 
-    // lại lấy chuỗi ra chuyển thành mảng rồi dùng 
-     const contents = JSON.parse(localStorage.getItem("contents")) || [];
-    // thêm các thành phần vào vô 
-  contents.push({
-      // id để xác định em bài đăng thứ mấy của ai, hiện thời gian , chuyển thành chuỗi
-      id: Date.now().toString(),
-      // này là xác định bài đăng của tài khoản nào nè
-    username: currentUser.username,
-    tieude,
-    chude,
-    mota,
-    chon,
-    thoigian: new Date().toISOString(),
-      thich: [],
-  binhluan:[]
-  });
-    localStorage.setItem("contents",JSON.stringify(contents));
-  loadContents();
+    const tieude = document.getElementById("tieude").value.trim();
+    const chude = document.getElementById("chude").value.trim();
+    const mota = document.getElementById("mota").value.trim();
+    const chedochon = document.getElementById("chedochon").value; // "congkhai" / "riengtu"
+
+    if (!tieude || !chude || !mota) {
+        alert("Vui lòng nhập đầy đủ thông tin.");
+        return;
+    }
+
+    const contents = JSON.parse(localStorage.getItem("contents") || "[]");
+
+    contents.push({
+        id: Date.now().toString(),
+        username: nguoidunghientai.taikhoan,        // đúng key từ signup/login
+        tieude,
+        chude,
+        mota,
+        chedochon,                                  // LƯU DẠNG A: congkhai / riengtu
+        ngaytao: new Date().toISOString(),
+        luotthich: [],
+        binhluan: []
+    });
+
+    localStorage.setItem("contents", JSON.stringify(contents));
+
+    document.getElementById("formthembai").reset();
+    tainoidung();
 });
 
-  binhluan:[]
+// ---------------- HIỂN THỊ DANH SÁCH BÀI ĐĂNG ----------------
+function tainoidung() {
+    const contents = JSON.parse(localStorage.getItem("contents") || "[]");
+    const tk = nguoidunghientai.taikhoan;
 
-function loadContents() {
-  const contents = JSON.parse(localStorage.getItem("contents")) || [];
-  const riengtuban = contents.filter(c => c.username === currentUser.username && c.chon === "riengtu");
-  const congkhaiban = contents.filter(c => c.username === currentUser.username && c.chon === "congkhai");
-  const nguoita = contents.filter(c => c.username !== currentUser.username && c.chon === "congkhai");
+    const riengtu = contents.filter(c => c.username === tk && c.chedochon === "riengtu");
+    const congkhai = contents.filter(c => c.username === tk && c.chedochon === "congkhai");
+    const nguoikhac = contents.filter(c => c.username !== tk && c.chedochon === "congkhai");
 
-    
+    document.getElementById("danhsachriengtucua_toi").innerHTML = "";
+    document.getElementById("danhsachcongkhaicua_toi").innerHTML = "";
+    document.getElementById("danhsachcongkhaicua_nguoikhac").innerHTML = "";
 
-    // xóa đi tất cả , tránh bị lặp, bị ghi đè
-    document.getElementById("riengtuban").innerHTML="";
-    document.getElementById("congkhaiban").innerHTML="";
-    document.getElementById("nguoita").innerHTML="";
-    
-    // duyệt lại toàntoàn bộ dữ liệu
-riengtuban.forEach((c,index)=>{
-    
-    // đang  trống giờ thêm vô nè
-    riengtuban.innerHTML+=`
-    <div class="content-item">
-        <strong>${c.tieude}</strong><br/>
-        Chủ đề: ${c.chude}<br/>
-        Mô tả ngắn: ${c.mota}<br/>
-        Trạng thái: ${c.chon}<br/>
-        <em>Tác giả: ${c.username}<br/>
-        
-        // tolocaleString là để biến cái thời gian về dạng thực , new date đang khó đọc  
-        Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
-        <button id="edit " onclick="edit(${index})">Sửa</button><br/>
-        <button id="delete"  onclick="delete(${index})">Xóa</button>
+    riengtu.forEach(c =>
+        document.getElementById("danhsachriengtucua_toi").innerHTML += taoBaiDangHTML(c, true)
+    );
 
+    congkhai.forEach(c =>
+        document.getElementById("danhsachcongkhaicua_toi").innerHTML += taoBaiDangHTML(c, true)
+    );
 
-        </div>`})
-
-
-congkhaiban.forEach((c,index)=>{
-    congkhaiban.innerHTML+=`
-    <div class="content-item">
-        <strong>${c.tieude}</strong><br/>
-        Chủ đề: ${c.chude}<br/>
-        Mô tả ngắn: ${c.mota}<br/>
-        Trạng thái: ${c.chon}<br/>
-        <em>Tác giả: ${c.username}<br/>
-        Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
-        <button id="edit " onclick="edit(${index})">Sửa</button><br/>
-        <button id="delete"  onclick="delete(${index})">Xóa</button>
-        </div>`;
-})
-nguoita.forEach(c=>{
-    // đếm xem có bao nhiêu đã like
-    const demlike=(c.thich || []).length;
-
-    // kiểm tra xem mk đã like bài này hay chx 
-    const colike=(c.thich || []).includes(currentUser.username);
-    nguoita.innerHTML+=`
-    <div class="content-item">
-        <strong>${c.tieude}</strong><br/>
-        Chủ đề: ${c.chude}<br/>
-        Mô tả ngắn: ${c.mota}<br/>
-        Trạng thái: ${c.chon}<br/>
-        <em>Tác giả: ${c.username}<br/>
-        Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
-
-        <div style="margin-top:10px;">
-        
-        <button id="like" onclick="hamdemlike('${c.id}')">${colike ? 'Đã thích' : 'Thích'} (${demlike})</button><br/>
-        <input type="text" id="comment(${index},${c.tieude})" placeholder="Viết bình luận">
-        <button onclick="add(${index},${c.tieude})">Gửi </button>
-        </div>`;
-})};
-//chức năng nút sửa, index để biết thứ tự bài đăng , group là để biết công khai hay riêng tư 
-function edit(index){
-    
-  //lấy dư liệu bài ra (contents=ng1, ng2, ng3,...) ra từ localStorage
-  const contents=JSON.parse(localStorage.getItem("contents")) || [];
-    
-  // lọc  những người có yếu tố phù hợp
-  const tb=contents.filter(c=>c.username===currentUser.username);
-    
-  // gán 
-  const item=tb[index];
-
-    // ko có thì thoát
-  if(!item) return;
-
-    // có thì nhập thông tin mới 
-  const tieudemoi=prompt("Nhập tiêu đề mới: ", item.tieude);
-  const motamoi =prompt("Nhập mô tả mới: ",item.mota);
-
-    // ko nhập thì thoát 
-  if(!tieudemoi || !motamoi)return;
-    //
-  const nomal=contents.find(c=>c.username===item.username&&c.tieude===item.tieude && c.thoigian===item.thoigian);
-  if(nomal){
-    c.tieude=tieudemoi;
-    c.topic=motamoi;
-    localStorage.setItem("contents", JSON.stringify(contents));
-    loadContents();
-  }};
-
-// chức năng của nút xóa 
-       function delete(index){
-           
-           // lấy dữ liệu 
-  const contents=JSON.parse(localStorage.getItem("contents"))||[];
-           
-           // lọc xem ai đang đăng nhập
-  const tb=contents.filter(c=>c.username===currentUser.username);
-  const item=tb[index];
-  if(!item) return;
-  const isconfirm =confirm(`Bạn có chắc muốn xóa: ${item.tieude}`);
-  if(!isconfirm) return;
-  const newcontents=contents.filter(c=>!(c.username===item.username&&c.tieude===item.tieude && c.thoigian===item.thoigian));
-           
-           // lọc xong thì lưu lại nè
-  localStorage.setItem("contents",JSON.stringify(newcontents));
-  loadContents();
+    nguoikhac.forEach(c =>
+        document.getElementById("danhsachcongkhaicua_nguoikhac").innerHTML += taoBaiDangHTML(c, false)
+    );
 }
-      //lưu chon để dùng cho trang thống kê
-      //1 . lấy ra từ html nè
-      const chon =document.getElementById("chon");
-      //2.gắn sự kiện change để mỗi khai thay đổi giá trị thẻ select id chon sẽ lưu vào local nè
-      chon.addEventListener("change",()=>{
-          localStorage.setItem("luuchon",chon.value);});
-      
-  </script>
+
+// ---------------- TẠO HTML CHO 1 BÀI ĐĂNG ----------------
+function taoBaiDangHTML(c, laCuaToi) {
+    const soLike = c.luotthich.length;
+    const daThich = c.luotthich.includes(nguoidunghientai.taikhoan);
+    const ngay = new Date(c.ngaytao).toLocaleString("vi-VN");
+
+    let btns = "";
+    let blList = "";
+
+    if (laCuaToi) {
+        btns = `
+            <div class="action-buttons">
+                <button onclick="suaBaiDang('${c.id}')">Sửa</button>
+                <button onclick="xoaBaiDang('${c.id}')">Xóa</button>
+            </div>`;
+    } else {
+        btns = `
+            <div class="action-buttons">
+                <button onclick="xuLyThich('${c.id}')">${daThich ? "Đã thích" : "Thích"} (${soLike})</button>
+                <input type="text" id="comment-${c.id}" placeholder="Viết bình luận">
+                <button onclick="themBinhLuan('${c.id}')">Gửi BL</button>
+            </div>
+        `;
+
+        blList = `
+            <div class="comment-list" style="margin-top:10px;">
+                <strong>Bình luận (${c.binhluan.length}):</strong>
+                <ul style="padding-left:0; list-style:none; margin-top:5px;">
+                    ${
+                        c.binhluan.length > 0
+                            ? c.binhluan.map(b => `
+                                <li><strong>${b.username}:</strong> ${b.text}</li>
+                              `).join("")
+                            : `<li style="color:#777;">Chưa có bình luận</li>`
+                    }
+                </ul>
+            </div>`;
+    }
+
+    return `
+    <div class="content-item">
+        <strong>${c.tieude}</strong>
+        Chủ đề: ${c.chude}<br>
+        Mô tả: ${c.mota}<br>
+        Chế độ: ${c.chedochon === "congkhai" ? "Công khai" : "Riêng tư"}<br>
+        <em>Tác giả: ${c.username}<br>Ngày tạo: ${ngay}</em>
+        ${btns}
+        ${blList}
+    </div>
+    `;
+}
+
+// ---------------- SỬA BÀI ----------------
+function suaBaiDang(id) {
+    const contents = JSON.parse(localStorage.getItem("contents") || "[]");
+    const index = contents.findIndex(c => c.id === id && c.username === nguoidunghientai.taikhoan);
+
+    if (index === -1) return;
+
+    const bai = contents[index];
+    const td = prompt("Tiêu đề mới:", bai.tieude);
+    const mt = prompt("Mô tả mới:", bai.mota);
+
+    if (td && mt) {
+        bai.tieude = td.trim();
+        bai.mota = mt.trim();
+        contents[index] = bai;
+        localStorage.setItem("contents", JSON.stringify(contents));
+        tainoidung();
+    }
+}
+
+// ---------------- XÓA BÀI ----------------
+function xoaBaiDang(id) {
+    const contents = JSON.parse(localStorage.getItem("contents") || "[]");
+    const bai = contents.find(c => c.id === id && c.username === nguoidunghientai.taikhoan);
+
+    if (!bai) return;
+
+    if (confirm(`Bạn muốn xóa bài "${bai.tieude}" ?`)) {
+        const newList = contents.filter(c => c.id !== id);
+        localStorage.setItem("contents", JSON.stringify(newList));
+        tainoidung();
+    }
+}
+
+// ---------------- THÍCH / BỎ THÍCH ----------------
+function xuLyThich(id) {
+    const contents = JSON.parse(localStorage.getItem("contents") || "[]");
+    const idx = contents.findIndex(c => c.id === id);
+
+    if (idx === -1) return;
+
+    const bai = contents[idx];
+    const tk = nguoidunghientai.taikhoan;
+
+    if (!bai.luotthich.includes(tk)) {
+        bai.luotthich.push(tk);
+    } else {
+        bai.luotthich = bai.luotthich.filter(u => u !== tk);
+    }
+
+    contents[idx] = bai;
+    localStorage.setItem("contents", JSON.stringify(contents));
+    tainoidung();
+}
+
+// ---------------- THÊM BÌNH LUẬN ----------------
+function themBinhLuan(id) {
+    const input = document.getElementById(`comment-${id}`);
+    const text = input.value.trim();
+
+    if (text === "") return alert("Nhập bình luận!");
+
+    const contents = JSON.parse(localStorage.getItem("contents") || "[]");
+    const idx = contents.findIndex(c => c.id === id);
+
+    if (idx === -1) return;
+
+    contents[idx].binhluan.push({
+        username: nguoidunghientai.taikhoan,
+        text,
+        time: new Date().toISOString()
+    });
+
+    input.value = "";
+    localStorage.setItem("contents", JSON.stringify(contents));
+    tainoidung();
+}
+
+// ---------------- ĐĂNG XUẤT ----------------
+function dangxuat() {
+    localStorage.removeItem("user");
+    location.href = "login.html";
+}
+
+// Đảm bảo hàm được dùng trong onclick HTML
+window.dangxuat = dangxuat;
+window.suaBaiDang = suaBaiDang;
+window.xoaBaiDang = xoaBaiDang;
+window.xuLyThich = xuLyThich;
+window.themBinhLuan = themBinhLuan;
+
+document.addEventListener("DOMContentLoaded", tainoidung);
+</script>
+
 </body>
 </html>
-    
-    
