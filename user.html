@@ -170,7 +170,7 @@ input:focus, textarea:focus, select:focus {
     background-color: #6a9ac9; 
 }
 
-/* Responsive  */
+/* Responsive adjustment */
 @media (max-width: 900px) {
     .main-layout {
         flex-direction: column;
@@ -241,17 +241,6 @@ if (!nguoidunghientai) {
 // ---------------- FORM THÊM BÀI ĐĂNG ----------------
 document.getElementById("formthembai").addEventListener("submit", function (e) {
     e.preventDefault();
-<<<<<<< HEAD
-=======
-    
-    //gán giá trị của từng thành phần cho các biến 
-    // value để lấy giá trị người dùng nhập vào 
-    // trim để xóa khoaeng trắng đầu và cuối 
-    const tieude=document.getElementById("tieude").value.trim();
-    const topic=document.getElementById("chude").value.trim();
-    const mota=document.getElementById("mota").value.trim();
-    const chon=documnet.getElemetByIdgetElemetById("chon");
->>>>>>> c8ba6e1693eb9c1d5249abfc749d4c0bf8e1b98d
 
     const tieude = document.getElementById("tieude").value.trim();
     const chude = document.getElementById("chude").value.trim();
@@ -283,15 +272,10 @@ document.getElementById("formthembai").addEventListener("submit", function (e) {
     tainoidung();
 });
 
-<<<<<<< HEAD
 // ---------------- HIỂN THỊ DANH SÁCH BÀI ĐĂNG ----------------
 function tainoidung() {
     const contents = JSON.parse(localStorage.getItem("contents") || "[]");
     const tk = nguoidunghientai.taikhoan;
-=======
-//Sau khi push thì dữ liệu đã được lưu, nhưng ko đồng nghĩa với nó được hiển thị ra màn hình
-      // chức năng của hàm này là để lọc và hiển thị nội dung sau khi nhập ra màn hình
->>>>>>> c8ba6e1693eb9c1d5249abfc749d4c0bf8e1b98d
 
     const riengtu = contents.filter(c => c.username === tk && c.chedochon === "riengtu");
     const congkhai = contents.filter(c => c.username === tk && c.chedochon === "congkhai");
@@ -309,7 +293,6 @@ function tainoidung() {
         document.getElementById("danhsachcongkhaicua_toi").innerHTML += taoBaiDangHTML(c, true)
     );
 
-<<<<<<< HEAD
     nguoikhac.forEach(c =>
         document.getElementById("danhsachcongkhaicua_nguoikhac").innerHTML += taoBaiDangHTML(c, false)
     );
@@ -461,156 +444,5 @@ window.themBinhLuan = themBinhLuan;
 document.addEventListener("DOMContentLoaded", tainoidung);
 </script>
 
-=======
-        </div>`})
-
-
-congkhaiban.forEach((c,index)=>{
-    congkhaiban.innerHTML+=`
-    <div class="content-item">
-        <strong>${c.tieude}</strong><br/>
-        Chủ đề: ${c.chude}<br/>
-        Mô tả ngắn: ${c.mota}<br/>
-        Trạng thái: ${c.chon}<br/>
-        <em>Tác giả: ${c.username}<br/>
-        Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
-        <button id="edit " onclick="edit(${index})">Sửa</button><br/>
-        <button id="delete"  onclick="delete(${index})">Xóa</button>
-        </div>`;
-})
-nguoita.forEach(c=>{
-    // đếm xem có bao nhiêu đã like
-    const demlike=(c.thich || []).length;
-
-    // kiểm tra xem mk đã like bài này hay chx 
-    const colike=(c.thich || []).includes(currentUser.username);
-    nguoita.innerHTML+=`
-    <div class="content-item">
-        <strong>${c.tieude}</strong><br/>
-        Chủ đề: ${c.chude}<br/>
-        Mô tả ngắn: ${c.mota}<br/>
-        Trạng thái: ${c.chon}<br/>
-        <em>Tác giả: ${c.username}<br/>
-        Ngày tạo: ${new Date(c.thoigian).toLocaleString()}<br/>
-   
-        <div style="margin-top:10px;">
-        
-        <button id="like" onclick="hamdemlike('${c.id}')">${colike ? 'Đã thích' : 'Thích'} (${demlike})</button><br/>
-        </div>
-        <div class="comment-box" style="margin-top:10px;">
-        
-        //tạo 1 ô nhập và nút gửi, , bởi vì bài nào cx có 1 ô nhập nên phải xác định bằng c.id
-        // nút gửi cx vậy 
-        <input type="text" id="comment-input('${c.id}')" placeholder="Viết bình luận">
-        <button onclick="hamthemcomment('${c.id}')">Gửi </button>
-
-        // tạo theem 1 hộp để chứa các comment của bài bên trong 
-        <div id="comment-${c.id}" style="margin-top: 10px;">
-        ${(c.binhluan || []).map(cm =>`<div class="comment">
-        <strong>${cm.tacgia}:</strong> ${cm.text} <small style="color: violet;"> (${new Date(cm.thoigian).toLocaleString()})</small>.join(" ");
-        </div>
-        </div>
-        
-        
-        </div>`;
-})};
-//chức năng nút sửa, index để biết thứ tự bài đăng , group là để biết công khai hay riêng tư 
-                     function edit(index){
-    
-  //lấy dư liệu bài ra (contents=ng1, ng2, ng3,...) ra từ localStorage
-  const contents=JSON.parse(localStorage.getItem("contents")) || [];
-    
-  // lọc  những người có yếu tố phù hợp
-  const tb=contents.filter(c=>c.username===currentUser.username);
-    
-  // gán 
-  const item=tb[index];
-
-    // ko có thì thoát
-  if(!item) return;
-
-    // có thì nhập thông tin mới 
-  const tieudemoi=prompt("Nhập tiêu đề mới: ", item.tieude);
-  const motamoi =prompt("Nhập mô tả mới: ",item.mota);
-
-    // ko nhập thì thoát 
-  if(!tieudemoi || !motamoi)return;
-    //
-  const nomal=contents.find(c=>c.username===item.username&&c.tieude===item.tieude && c.thoigian===item.thoigian);
-  if(nomal){
-    c.tieude=tieudemoi;
-    c.topic=motamoi;
-    localStorage.setItem("contents", JSON.stringify(contents));
-    loadContents();
-  }};
-
-// chức năng của nút xóa 
-                              function delete(index){
-           
-           // lấy dữ liệu 
-  const contents=JSON.parse(localStorage.getItem("contents"))||[];
-           
-           // lọc xem ai đang đăng nhập
-  const tb=contents.filter(c=>c.username===currentUser.username);
-  const item=tb[index];
-  if(!item) return;
-  const isconfirm =confirm(`Bạn có chắc muốn xóa: ${item.tieude}`);
-  if(!isconfirm) return;
-  const newcontents=contents.filter(c=>!(c.username===item.username&&c.tieude===item.tieude && c.thoigian===item.thoigian));
-           
-           // lọc xong thì lưu lại nè
-  localStorage.setItem("contents",JSON.stringify(newcontents));
-  loadContents();
-}
-                                             function hamdemlike(postid){
-// lấy dữ liệu từ contents ra 
-const contents=JSON.parse(localStorage.getItem("contents")) || [];
-
-// lọc để tìm vị trí mảng trong content đó( dạng: 1,2,3,...)
-const idx = contents.findIndex(P => p.id === postid);
-
-// -1 có nghĩa là ko tồn tại, ko tồn tại thì thoát
-if(idx===-1) return;
-
-// trên mk lọcra vị trí của bài đăng trong content rồi , bây giờ mk lấy nó ra để gán
-// bây giờ post là 1 bài đang xác định 
-         const post=content[idx];
-
-           post.thich=post.thich || [];
-// tìm xem người này đã có trong dahsasch like chx, kiểm tra em có đang like chx á
-const pos= post.thich.indexOf(currentUser.username);
-if(pos===-1){
-               post.thich.push(currentUser.username);}
-else{
-                 post.thich.splice(pos,1)}
-  localStorage.setItem("contents",JSON.stringify(contents));
-  loadContents();}
-                                                        function hamthemcommnet(postid){
-const input= document.getElementById(`comment-input-${postid}`);
-if(!input) return;
-    const text= input.value.trim();
-if (!text){
-            alert("Khôg thể gửi bình luận rỗng); return;
-}
-const contents=JSON.parse(localStorage.getItem("contents");
-const idx=contents.findIndex(p=>p.id===postid);
-if (idx===-1) return;
-        const post= contents[idx];
-if(!post.binhluan){
-             post.binhluan=[];
-}
-      post.binhluan.push{
-tacgia: currentUser.username,
-text: text,
-thoigian: new Date().tpISOString()
-});
-        localStorage.setItem("contents", JSON.stringify(contents));
-input.value="";
-loadContents();
-
-     
-      
-  </script>
->>>>>>> c8ba6e1693eb9c1d5249abfc749d4c0bf8e1b98d
 </body>
 </html>

@@ -66,7 +66,6 @@
     <p id="hello"></p>
 
     <div class="container">
-<<<<<<< HEAD
         <div class="card">
             <div>Tổng bài đăng của tôi</div>
             <div class="value" id="tongbaimk">0</div>
@@ -87,61 +86,6 @@
             <div>Tổng bình luận</div>
             <div class="value" id="tongblmk">0</div>
         </div>
-=======
-            <div class="card">
-                      <div> Tổng bài đăng của mình </div>
-                     <div class="value" id="tongbaimk">0</div>
-            </div>
-               <div class="card">
-                      <div> Bài public </div>
-                     <div class="value" id="baickmk">0</div>
-            </div>
-               <div class="card">
-                      <div> Bài private </div>
-                     <div class="value" id="bairtmk">0</div>
-            </div>
-               <div class="card">
-                      <div> Lượt like nhận  </div>
-                     <div class="value" id="thichmk">0</div>
-            </div>
-             <div class="card">
-                      <div> Tổng bài đăng của mình </div>
-                     <div class="value" id="blmk">0</div>
-            </div>
-            <script>
-
-             // lấy dữ liệu từ localStorage ra , nếu ko có thì tạo 1 mảng rỗng 
-                let currentUser=JSON.parse(localStorage.getItem("currentUser"));
-                let users=JSON.parse(localStorage.getItem("users")) ||[];
-                let contents=JSON.parse(localStorage("contents")) ||[];
-              
-
-             // thêm nội dung để hiển thị 
-             document.getElementById("hello").innerText="Xin chào," + currentUser.username;
- 
-             let baitoi=contents.filter(c=>c.username===currentUser.username );
-
-             document.getElementById("tongbaimk").innerText=baitoi.length;
-             documnent.getElementById("baickmk").innerText=contents.filter(c=>c.username===currentUser && c.chon==="congkhai").length;
-              documnent.getElementById("bairtmk").innerText=contents.filter(c=>c.username===currentUser && c.chon==="riengtu").length;
-
-              // tính lượt like 
-              document.getElementById("thichmk").innerText=baitoi.reduce((sum,x)=> sum + (x.thich || 0),0);
-             document.getElementById("blmk").innerText=baitoi.reduce((sum,x)=> sum + (x.binhluan || 0),0);
-            
-
-             
-
-
-
-
-
-            </script>
-
-
-
-
->>>>>>> c8ba6e1693eb9c1d5249abfc749d4c0bf8e1b98d
     </div>
 
 <script>
