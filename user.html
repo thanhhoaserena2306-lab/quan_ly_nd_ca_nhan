@@ -101,7 +101,7 @@ document.getElementById("manage").addEventListener("submit",function(e){
     const tieude=document.getElementById("tieude").value.trim();
     const topic=document.getElementById("chude").value.trim();
     const mota=document.getElementById("mota").value.trim();
-    const chon=documnet.getElemecongkhai("chon");
+    const chon=documnet.getElemetByIdgetElemetById("chon");
 
     // lại lấy chuỗi ra chuyển thành mảng rồi dùng 
      const contents = JSON.parse(localStorage.getItem("contents")) || [];
@@ -210,7 +210,7 @@ nguoita.forEach(c=>{
         </div>`;
 })};
 //chức năng nút sửa, index để biết thứ tự bài đăng , group là để biết công khai hay riêng tư 
-function edit(index){
+                     function edit(index){
     
   //lấy dư liệu bài ra (contents=ng1, ng2, ng3,...) ra từ localStorage
   const contents=JSON.parse(localStorage.getItem("contents")) || [];
@@ -240,7 +240,7 @@ function edit(index){
   }};
 
 // chức năng của nút xóa 
-       function delete(index){
+                              function delete(index){
            
            // lấy dữ liệu 
   const contents=JSON.parse(localStorage.getItem("contents"))||[];
@@ -257,7 +257,7 @@ function edit(index){
   localStorage.setItem("contents",JSON.stringify(newcontents));
   loadContents();
 }
-function hamdemlike(postid){
+                                             function hamdemlike(postid){
 // lấy dữ liệu từ contents ra 
 const contents=JSON.parse(localStorage.getItem("contents")) || [];
 
@@ -269,37 +269,37 @@ if(idx===-1) return;
 
 // trên mk lọcra vị trí của bài đăng trong content rồi , bây giờ mk lấy nó ra để gán
 // bây giờ post là 1 bài đang xác định 
-const post=content[idx];
+         const post=content[idx];
 
-post.thich=post.thich || [];
+           post.thich=post.thich || [];
 // tìm xem người này đã có trong dahsasch like chx, kiểm tra em có đang like chx á
 const pos= post.thich.indexOf(currentUser.username);
 if(pos===-1){
-post.thich.push(currentUser.username);}
+               post.thich.push(currentUser.username);}
 else{
-post.thich.splice(pos,1)}
-localStorage.setItem("contents",JSON.stringify(contents));
-loadContents();}
-function hamthemcommnet(postid){
+                 post.thich.splice(pos,1)}
+  localStorage.setItem("contents",JSON.stringify(contents));
+  loadContents();}
+                                                        function hamthemcommnet(postid){
 const input= document.getElementById(`comment-input-${postid}`);
 if(!input) return;
-const text= input.value.trim();
+    const text= input.value.trim();
 if (!text){
-alert("Khôg thể gửi bình luận rỗng); return;
+            alert("Khôg thể gửi bình luận rỗng); return;
 }
 const contents=JSON.parse(localStorage.getItem("contents");
 const idx=contents.findIndex(p=>p.id===postid);
 if (idx===-1) return;
-const post= contents[idx];
+        const post= contents[idx];
 if(!post.binhluan){
-post.binhluan=[];
+             post.binhluan=[];
 }
-post.binhluan.push{
+      post.binhluan.push{
 tacgia: currentUser.username,
 text: text,
 thoigian: new Date().tpISOString()
 });
-localStorage.setItem("contents", JSON.stringify(contents));
+        localStorage.setItem("contents", JSON.stringify(contents));
 input.value="";
 loadContents();
 
